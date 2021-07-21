@@ -1,0 +1,9 @@
+include:
+  - ../../fixtures/templates.yaml
+
+App\Entity\Auth\User:
+  user{1..5} (extends user):
+
+  user_admin (extends user):
+    username: Linkmat
+    email: fake@email.fr

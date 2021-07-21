@@ -1,0 +1,24 @@
+App\Entity\Forum\Entity\ForumTopic:
+  shortName: 'forum/topic'
+  collectionOperations: []
+  itemOperations:
+    get:
+      normalization_context:
+        groups: ['read:topic']
+    delete:
+      security: is_granted("DELETE_TOPIC", object)
+App\Entity\Forum\Entity\ForumMessage:
+  shortName: 'forum/message'
+  collectionOperations: []
+  itemOperations:
+    get:
+      normalization_context:
+        groups: ['read:message']
+    delete:
+      security: is_granted("DELETE_FORUM_MESSAGE", object)
+    put:
+      denormalization_context:
+        groups: ['update:message']
+      normalization_context:
+        groups: ['read:message']
+      security: is_granted("UPDATE_FORUM_MESSAGE", object)

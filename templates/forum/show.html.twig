@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% set bodyClass = 'header-light' %}
+
+{% block title "Forum : " ~ topic.name %}
+
+{% block body %}
+
+    <div class="page-header container topic-header">
+        <div>
+            <h1 class="h2 mb2">{{ topic.name }}</h1>
+            <div class="topic-header__meta">
+                    {{ topic.author.username }}
+
+                <small class="topic-header__date">{{ topic.createdAt | ago }}
+                    <forum-edit topic="{{ topic.id }}" owner="{{ topic.author.id }}"></forum-edit>
+                    <forum-delete topic="{{ topic.id }}" owner="{{ topic.author.id }}"></forum-delete>
+                </small>
+                <div class="topic-header__tags">
+                    {% include 'forum/_tags.html.twig' with {tags: topic.tags} only %}
+                </div>
+            </div>
+        </div>
+        <div class="hstack center topic-actions">
+            <forum-report topic="{{ topic.id }}" owner={{ topic.author.id }} class="topic-header__actions"></forum-report>
+
+        </div>
+    </div>
+
+    <div class="container stack topic-page py5">
+
+        <div class="forum-message">
+            <div class="forum-message__body">
+                <div class="js-content formatted formatted">
+                    {{ topic.content | markdown_untrusted }}
+                </div>
+                <div class="js-forum-edit"></div>
+            </div>
+        </div>
+
+        <div class="mb1">
+            <h2 class="h3 mt3 mb1">
+
+            </h2>
+            <hr/>
+        </div>
+
+        <div class="forum-messages">
+            {% for message in topic.messages %}
+                {% if message.spam == false or (app.user and message.author.id == app.user.id) %}
+
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

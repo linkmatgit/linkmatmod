@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+
+    <title>{% apply striptags %}{% block title '' %}{% endapply %} | Linkmat.COM</title>
+
+
+    {% block stylesheets %}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app', ['react']) }}
+        {{ encore_entry_script_tags('admin', ['react']) }}
+    {% endblock %}
+</head>
+<body class="admin">
+<div class="dashboard-page">
+
+    <aside class="dashboard-sidebar">
+        <div class="dashboard-sidebar__wrapper">
+            <ul class="dashboard-sidebar__main">
+                <li><a href="{{ path('admin_app_dashboard') }}" {{ menu_active('home') }}>{{ icon('home') }} Dashboard</a></li>
+                <li class="title">Communautée</li>
+                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a></li>
+                <li><a href="#" {{ menu_active('blog_category') }}>{{ icon('lines') }} Blog Category</a></li>
+
+            </ul>
+        </div>
+    </aside>
+    <aside class="dashboard-topbar">
+        <div class="dashboard-topbar__search">
+            {% if searchable is defined and searchable %}
+                <form>
+                    <input name="q" type="text" placeholder="Rechercher" value="{{ app.request.get('q') }}">
+                </form>
+            {% endif %}
+        </div>
+        <ul class="dashboard-topbar__nav">
+
+            <li class="header__logout"><a href="/">{{ icon('logout') }}</a></li>
+        </ul>
+    </aside>
+    <main class="dashboard-body">
+        {% include 'partials/flash.html.twig' with {floating: true, duration: 2} %}
+        {% block body '' %}
+    </main>
+</div>
+<script>
+    window.linkmat = {
+        ...(window.linkmat || {}),
+        ADMIN: {{ is_granted('SUPERADMIN') ? 'true' : 'false' }},
+        USER: {{ app.user ? app.user.id : 'null' }}
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="blog-single py5">
+
+        <div class="blog-single__header">
+            <h1 class="blog-single__title">{{ post.title }}</h1>
+            <div class="blog-single__meta">
+                Posté le {{ post.createdAt | format_date('long') }} -
+                <a href="#">{{post.category.name}}</a> -
+                Par {{ post.author.username }} -
+            </div>
+        </div>
+
+        <div class="blog-single__body formatted">
+            {{ post.content | markdown }}
+        </div>
+
+        {% include 'partials/comments.html.twig' with {post} only %}
+
+    </div>
+{% endblock %}
+

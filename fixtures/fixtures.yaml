@@ -1,0 +1,35 @@
+include:
+  - templates.yaml
+
+App\Entity\Auth\User:
+  user{1..5} (extends user):
+  admin (extends user):
+    username: Linkmat
+    email: linkmat@doe.fr
+
+App\Entity\Blog\Category:
+  category{1..5} (extends category):
+
+App\Entity\Blog\Post:
+  post{1..50} (extends post):
+    category: '@category*'
+
+App\Entity\Comment\Comment:
+  comment{1..250} (extends comment):
+
+App\Entity\Mods\Entity\ModsBrand:
+  modsbrand{1..15} (extends modsbrand):
+
+App\Entity\Mods\Entity\ModsCategory:
+  modcategory{1..30} (extends modcategory):
+
+App\Entity\Mods\Entity\Mods:
+  mods{1..150} (extends mods):
+    brand: '@modsbrand*'
+    category: '@modcategory*'
+
+App\Entity\Forum\Entity\ForumTag:
+  tag{1..15} (extends tag):
+
+App\Entity\Forum\Entity\ForumTopic:
+  topic{1..550} (extends topic):

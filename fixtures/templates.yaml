@@ -1,0 +1,78 @@
+
+App\Entity\Blog\Post:
+  post (template):
+    title: <sentence(5, true)>
+    slug: <slug()>
+    content: <text(1500)>
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    online: true
+    author: '@user1'
+
+App\Domain\Blog\Category:
+  category (template):
+    name: <sentence(5, true)>
+    slug: <slug()>
+    color: 000
+    createdAt: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    description: <sentence(2, true)>
+    author: '@user1'
+
+App\Entity\Auth\User:
+  user (template):
+    username: John<current()>
+    email: john<current()>\@doe.fr
+    password: <password('0000')>
+    createdAt: <dateTimeThisYear()>
+    isVerified: true
+
+App\Entity\Comment\Comment:
+  comment (template):
+    publishAt: <dateTimeThisYear()>
+    content: <sentence(100)>
+    author: '@user*'
+    target: '@post*'
+App\Entity\Mods\Entity\ModsBrand:
+  modsbrand (template):
+    name: <sentence(5, true)>
+    description: <sentence(2, true)>
+
+App\Entity\Mods\Entity\ModsCategory:
+  modcategory (template):
+    name: <sentence(5, true)>
+    description: <sentence(2, true)>
+
+App\Entity\Mods\Entity\Mods:
+  mods (template):
+    title: <sentence(5, true)>
+    slug: <slug()>
+    content: <text(1500)>
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    online: true
+    author: '@user1'
+    price: 500<current()>
+    releaseDate: <dateTimeThisYear()>
+    size: 2.3
+    version: 1.0.0.1
+    uri: 'http://linkmat.localhost:8000/mods/<current()>'
+
+App\Entity\Forum\Entity\ForumTag:
+  tag (template):
+    title: <sentence(1, true)>
+    slug: <slug()>
+    description: <sentence(2, true)>
+    online: true
+    creator: '@user1'
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    position: 1
+
+App\Entity\Forum\Entity\ForumTopic:
+  topic (template):
+    name: <sentence(5, true)>
+    content: <sentence(2, true)>
+    author: '@user1'
+    created_at: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
