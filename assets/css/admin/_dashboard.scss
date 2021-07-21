@@ -21,7 +21,7 @@
   position: sticky;
   max-height: 100vh;
   overflow: auto;
-  padding: space(1.5) space(3);
+  padding: calc(var(--space) * 1.5) calc(var(--space) * 3);
 }
 .dashboard-sidebar__main li:first-child {
   margin-bottom: -6px;
@@ -29,22 +29,22 @@
 .dashboard-sidebar__main li a {
   display: flex;
   align-items: center;
-  padding: space(1) 0;
+  padding: calc(var(--space) * 1) 0;
 
   &[aria-current] {
     border-left: 3px solid var(--contrast);
     background: var(--background);
-    margin:0 space(-3);
-    padding-left: space(3);
+    margin:0 calc(var(--space) - 24);
+    padding-left: calc(var(--space) * 3);
     color: var(--contrast);
   }
 }
 
 .dashboard-sidebar__main .title {
   border-top: 1px solid var(--border-light);
-  margin-top: space(1.5);
-  padding-top: space(1.5);
-  padding-bottom: space(.5);
+  margin-top: calc(var(--space) * 1.5);
+  padding-top: calc(var(--space) * 1.5);
+  padding-bottom: calc(var(--space) * 0.5);
   text-transform: uppercase;
   font-weight: 300;
   font-size: 0.75em;
@@ -52,7 +52,7 @@
 }
 
 .dashboard-sidebar__main .icon {
-  margin-right: space(1);
+  margin-right: calc(var(--space) * 1);
   width: 16px;
   height: 16px;
 }
@@ -60,7 +60,7 @@
 // Topbar
 // =============
 .dashboard-topbar {
-  padding: 0 space(6);
+  padding: 0 calc(var(--space) * 6);
   display: flex;
   align-items: center;
   height: 60px;
@@ -80,7 +80,7 @@
 }
 .dashboard-topbar__nav > li {
   display: block;
-  margin-left: space(2);
+  margin-left: calc(var(--space) * 2);
 }
 .dashboard-topbar__nav > li > a,
 .dashboard-topbar__nav > li > button {
@@ -93,7 +93,7 @@
   input {
     outline: none;
     width: 100%;
-    padding: space(1) 0 space(1) space(3);
+    padding: calc(var(--space) * 1) 0 calc(var(--space) * 1) calc(var(--space) * 3);
     border: none;
     background: url(/images/input-search.svg) left center / 14px 14px no-repeat;
     color: inherit;
@@ -107,7 +107,7 @@
 // =============
 .dashboard-body {
   position: relative;
-  padding: space(3) space(6);
+  padding: calc(var(--space) * 3) calc(var(--space) * 6);
   grid-area: body;
 }
 
@@ -126,7 +126,7 @@
   box-shadow: 0 2px 4px var(--shadow);
   border-radius: 3px;
   transition: 0.3s;
-  padding: space(3);
+  padding: calc(var(--space) * 3);
 }
 .dashboard-card__tabs {
   display: flex;
@@ -138,7 +138,7 @@
   font-size: .9rem;
 
   & > * {
-    padding: space(1) space(2);
+    padding: var(--space) calc(var(--space) * 2);
     background: var(--background);
     border-right: 1px solid var(--border-light);
     border-bottom: 1px solid var(--border);
@@ -174,7 +174,7 @@
   justify-content: flex-end;
 
   & > * + * {
-    margin-left: space(1);
+    margin-left: calc(var(--space) * 1);
   }
 }
 
@@ -183,7 +183,7 @@
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
-  grid-gap: space(3);
+  grid-gap: calc(var(--space) * 3);
 }
 
 // Formulaires

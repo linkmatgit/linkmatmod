@@ -1,4 +1,4 @@
-import "./styles/admin.scss"
+import "./css/admin.scss"
 import InputAttachment from "/Elements/admin/InputAttachment";
 import FileManager from "/Elements/admin/filemanager";
 import { ModalDialog} from '@sb-elements/all'

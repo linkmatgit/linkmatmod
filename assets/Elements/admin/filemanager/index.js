@@ -1,7 +1,6 @@
 import { FileManager as FileManagerComponent } from './FileManager.jsx'
-import {render} from "react-dom";
-import React from 'react';
-import {h} from '/functions/h'
+import { h, render } from 'preact'
+
 export default class FileManager extends HTMLElement {
   constructor () {
     super()

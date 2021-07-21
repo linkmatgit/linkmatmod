@@ -1,7 +1,7 @@
 
 import TomSelect from 'tom-select'
 import { redirect } from '/functions/url'
-import {jsonFetch} from "/functions/JsonFetch";
+import {jsonFetch} from "/functions/api";
 
 export class InputChoices extends HTMLInputElement {}
 

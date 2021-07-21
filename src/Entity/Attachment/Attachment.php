@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[ORM\Entity(repositoryClass: AttachmentRepository::class)]
+#[ORM\Entity()]
 #[Vich\Uploadable]
 class Attachment {
 
@@ -47,39 +47,15 @@ class Attachment {
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    /**
-     * @param File|null $file
-     * @return Attachment
-     */
-    public function setFile(?File $file): Attachment
-    {
-        $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getFileName(): string
     {
         return $this->fileName;
     }
 
-    /**
-     * @param string $fileName
-     * @return Attachment
-     */
-    public function setFileName(string $fileName): Attachment
+    public function setFileName(?string $fileName): self
     {
-        $this->fileName = $fileName;
+        $this->fileName = $fileName ?: '';
+
         return $this;
     }
 
@@ -97,7 +73,7 @@ class Attachment {
      */
     public function setFileSize(int $fileSize): Attachment
     {
-        $this->fileSize = $fileSize;
+        $this->fileSize = $fileSize ?: 0;
         return $this;
     }
 
@@ -116,6 +92,18 @@ class Attachment {
     public function setCreatedAt(\DateTimeInterface $createdAt): Attachment
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): Attachment
+    {
+        $this->file = $file;
+
         return $this;
     }
 

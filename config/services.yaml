@@ -1,5 +1,9 @@
 parameters:
     admin_prefix:     '%env(resolve:ADMIN_PREFIX)%'
+    container.dumper.inline_factories: true
+    container.dumper.inline_class_loader: true
+    asset.request_context.secure: true
+    image_resize_key: '%env(resolve:IMAGE_RESIZE_KEY)%'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -48,6 +52,7 @@ services:
 
     App\Http\Twig\TwigAssetExtension:
         arguments:
-            $isDev: '%env(VITE_DEV)'
-            $manifest: '%kernel.project_dir%/public/assets/manifest.json'
-            $cache: '@view_cache_pool'
+            $assetPath: '%kernel.project_dir%/public/assets'
+            $env: '%kernel.environment%'
+    App\Infrastructure\Image\ImageResizer:
+        arguments: [ '%image_resize_key%' ]

@@ -16,7 +16,9 @@ class PostCrudData implements CrudDataInterface
 {
     #[Assert\NotBlank]
     public ?string $title = null;
+
     private EntityManagerInterface $em;
+
     public ?string $slug = null;
 
     public ?Category $category = null;
@@ -33,7 +35,7 @@ class PostCrudData implements CrudDataInterface
 
     private Post $entity ;
 
-    public ?Attachment $image = null;
+    private ?Attachment $image = null;
 
 
     #[Pure]
@@ -52,16 +54,15 @@ class PostCrudData implements CrudDataInterface
     }
     public function hydrate(): void
     {
-        $this->entity
-            ->setCategory($this->category)
-            ->setTitle($this->title)
-            ->setCreatedAt($this->createdAt)
-            ->setContent($this->content)
-            ->setOnline($this->online)
-            ->setUpdatedAt(new \DateTime())
-            ->setAuthor($this->author)
-            ->setSlug($this->slug)
-        ->setImage($this->image);
+        $this->entity->setCategory($this->category);
+        $this->entity->setTitle($this->title);
+           $this->entity->setCreatedAt($this->createdAt);
+            $this->entity->setContent($this->content);
+            $this->entity->setOnline($this->online);
+            $this->entity->setUpdatedAt(new \DateTime());
+            $this->entity->setAuthor($this->author);
+            $this->entity->setSlug($this->slug);
+            $this->entity->setImage($this->image);
     }
 
     public function setEntityManager(EntityManagerInterface $em): self

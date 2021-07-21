@@ -20,8 +20,7 @@ class CrudController extends AdminAbstractController
 
     protected string $entity = Content::class;
 
-    protected string $template = 'blog';
-
+    protected string $templatePath = 'blog';
     protected string $menuItem = '';
     protected string $routePrefix ='';
     protected string $searchField = 'title';
@@ -48,7 +47,7 @@ class CrudController extends AdminAbstractController
         }
         $this->paginator->allowSort('row.id', 'row.title');
         $rows = $this->paginator->paginate($query->getQuery());
-        return $this->render("admin/{$this->template}/index.html.twig", [
+        return $this->render("admin/{$this->templatePath}/index.html.twig", [
             'rows' => $rows,
             'searchable' => true,
             'menu' => $this->menuItem,

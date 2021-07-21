@@ -1,41 +1,64 @@
-import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import {resolve} from 'path'
+// @ts-check
+import prefresh from "@prefresh/vite";
+import { resolve } from 'path'
 
-const twigRefreshPlugin = {
+const root = "./assets";
+
+/**
+ * Rafraichi la page quand on modifie un fichier twig
+ */
+const twigRefreshPlugin = () => ({
     name: 'twig-refresh',
-    configureServer ({watcher, ws}) {
-        watcher.add (resolve ('templates / ** / *. twig'))
-        watcher.on ('change', function (path) {
-            if (path.endsWith ('. twig')) {
-                ws.send ({
-                    type: 'full-reload'
+    configureServer({ watcher, ws }) {
+        watcher.add(resolve(__dirname, "templates/**/*.twig"));
+        watcher.on("change", function (path) {
+            if (path.endsWith(".twig")) {
+                ws.send({
+                    type: 'full-reload',
                 })
             }
-        })
-    }
-}
-// https://vitejs.dev/config/
-export default defineConfig({
-    plugins: [reactRefresh(), twigRefreshPlugin],
-    root: './assets',
-    base: '/assets',
-    server: {
-        watch: {
-            disableGlobbing: false, // required for the twig plugin
-        }
-    },
-    build: {
-        manifest: true,
-        outDir:'../public/assets',
-        assetsDir:'',
-        rollupOptions:{
-            output: {
-                manualChunks: undefined
-            },
-            input:{
-                'app.js': './assets/app.js'
-            }
-        }
+        });
     }
 })
+
+/**
+ * @type { import('vite').UserConfig }
+ */
+const config = {
+    resolve: {
+        alias: {
+            react: "preact/compat",
+            "react-dom": "preact/compat",
+        }
+    },
+    emitManifest: true,
+    cors: true,
+    optimizeDeps: {
+        include: ['preact/hooks', 'preact/compat', 'htm/mini']
+    },
+    esbuild: {
+        jsxFactory: 'h',
+        jsxFragment: 'Fragment',
+        jsxInject: `import { h, Fragment } from 'preact'`
+    },
+    base: '/assets/',
+    build: {
+        polyfillDynamicImport: false,
+        assetsDir: '',
+        manifest: true,
+        outDir: '../public/assets/',
+        rollupOptions: {
+            output: {
+                manualChunks: undefined // Désactive la séparation du vendor
+            },
+            input: {
+                app: resolve(__dirname, 'assets/app.js'),
+                admin: resolve(__dirname, 'assets/admin.js')
+            }
+        },
+    },
+    plugins: [prefresh(), twigRefreshPlugin()],
+    root
+};
+
+module.exports = config;

@@ -7,23 +7,24 @@ namespace App\Entity\Attachment\Normalizer;
 use App\Entity\Attachment\Attachment;
 use App\Infrastructure\Image\ImageResizer;
 use App\Infrastructure\Normalizer\Normalizer;
-use JetBrains\PhpStorm\ArrayShape;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class AttachmentApiNormalizer extends Normalizer
 {
+    private ImageResizer $resizer;
+    private UploaderHelper $uploaderHelper;
 
     public function __construct(
-       private UploaderHelper $uploaderHelper,
-       private ImageResizer $resizer
+        UploaderHelper $uploaderHelper,
+        ImageResizer $resizer
     ) {
-
+        $this->resizer = $resizer;
+        $this->uploaderHelper = $uploaderHelper;
     }
 
     /**
      * @param Attachment $object
      */
-    #[ArrayShape(['id' => "int|null", 'createdAt' => "int", 'name' => "string", 'size' => "int", 'url' => "null|string", 'thumbnail' => "string"])]
     public function normalize($object, string $format = null, array $context = []): array
     {
         $info = pathinfo($object->getFileName());

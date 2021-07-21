@@ -1,5 +1,5 @@
-<div class="card" style="padding: 15px">
- {{ form_start(form, {attr: {class: 'stacked' }}) }}
+<div class="card " style="padding: 15px">
+ {{ form_start(form, {attr: {class: 'stack' }}) }}
     <section>
     <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
 
@@ -11,12 +11,12 @@
         {{ form_row(form.author) }}
         {{ form_row(form.createdAt) }}
         {{ form_row(form.online) }}
-        {{ form_row(form.image, {row_attr: {class: 'form-attachment', style:'grid-row-start:1;align-self:stretch;'}}) }}
+
 
     </div>
 
     </section>
-     <section>
+     <section class="stack-large">
          <div class="full">
              {{ form_row(form.content) }}
          </div>

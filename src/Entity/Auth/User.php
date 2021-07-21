@@ -4,8 +4,10 @@ namespace App\Entity\Auth;
 
 use App\Repository\UserRepository;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
+use JetBrains\PhpStorm\Pure;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
@@ -17,9 +19,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 
-/**
- * @method string getUserIdentifier()
- */
 
 /**
  * $2y$13$Ka0xj4/BgKrDxhGsulaRiOjINFF7RCuqgq2Fkf/Uh3Wj2K2cfA4V.
@@ -33,33 +32,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[Id]
     #[GeneratedValue(strategy: "IDENTITY")]
-    #[Column(type: 'integer')]
+    #[Column(type: Types::INTEGER)]
     #[Groups(['read:comment'])]
     private ?int $id = null;
 
-    #[Column(type: 'string', length: 180, unique: true)]
+    #[Column(type: Types::STRING, length: 180, unique: true)]
     #[Groups(['read:comment'])]
     private string $username = '';
 
-    #[Column(type: 'json')]
+    #[Column(type: Types::JSON)]
     private array $roles = ['ROLE_USER'];
 
-    #[Column(type: 'string')]
+    #[Column(type: Types::STRING)]
     private string $password = '';
 
-    #[Column(type: 'string', length: 200, unique: true)]
+    #[Column(type: Types::STRING, length: 200, unique: true)]
     private string $email = '';
 
-    #[Column(type: 'boolean')]
+    #[Column(type: Types::BOOLEAN)]
     private bool $isVerified = false;
 
-    #[Column(type: 'string', nullable: true)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $avatarName =  null;
 
     #[UploadableField(options: ['mapping' => 'avatar', 'fileNameProperty' => 'avatarName', 'size'=> 'avatarSize'])]
     private ?File $avatarFile = null;
 
-    #[Column(type: 'integer', nullable: true)]
+    #[Column(type: Types::INTEGER, nullable: true)]
     private ?int $avatarSize = null;
 
     #[Column(type: 'datetime', nullable: true)]
@@ -68,15 +67,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[Column(type: 'string', nullable: true)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $headerName =  null;
 
     #[UploadableField(options: ['mapping' => 'header-profil', 'fileNameProperty' => 'headerName', 'size'=> 'headerSize'])]
     private ?File $headerFile = null;
 
-    #[Column(type: 'integer', nullable: true)]
+    #[Column(type: Types::INTEGER, nullable: true)]
     private ?int $headerSize = null;
 
+    #[Column(type: Types::STRING, nullable: true, options: ['default' => null])]
+    private ?string $lastLoginIp = null;
+
+    #[Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $lastLoginAt = null;
+
+    #[Column(type: Types::STRING, nullable: true, options: ['default' => null])]
+    private ?string $theme = null;
+
+    #[Column(type: 'datetime', nullable: true)]
+    private ?\DateTimeInterface $bannedAt = null;
+
+    #[Column(type: Types::STRING, length: 2, nullable: true, options: ['default' => 'CA'])]
+    private ?string $country = null;
     /**
      * @return int|null
      */
@@ -112,6 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->username = $username;
         return $this;
     }
+
 
     /**
      * @return array
@@ -178,10 +192,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function __call(string $name, array $arguments)
-    {
-        // TODO: Implement @method string getUserIdentifier()
-    }
 
     public function isVerified(): bool
     {
@@ -266,4 +276,95 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->avatarSize;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getLastLoginIp(): ?string
+    {
+        return $this->lastLoginIp;
+    }
+
+    /**
+     * @param string|null $lastLoginIp
+     * @return User
+     */
+    public function setLastLoginIp(?string $lastLoginIp): User
+    {
+        $this->lastLoginIp = $lastLoginIp;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getLastLoginAt(): ?\DateTimeInterface
+    {
+        return $this->lastLoginAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $lastLoginAt
+     * @return User
+     */
+    public function setLastLoginAt(?\DateTimeInterface $lastLoginAt): User
+    {
+        $this->lastLoginAt = $lastLoginAt;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    /**
+     * @param string|null $theme
+     * @return User
+     */
+    public function setTheme(?string $theme): User
+    {
+        $this->theme = $theme;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getBannedAt(): ?\DateTimeInterface
+    {
+        return $this->bannedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $bannedAt
+     * @return User
+     */
+    public function setBannedAt(?\DateTimeInterface $bannedAt): User
+    {
+        $this->bannedAt = $bannedAt;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param string|null $country
+     * @return User
+     */
+    public function setCountry(?string $country): User
+    {
+        $this->country = $country;
+        return $this;
+    }
+
 }

@@ -13,18 +13,16 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-
 class AttachmentType extends TextType implements DataTransformerInterface
 {
-
-    private ?EntityManagerInterface $em = null;
-    private ?UploaderHelper $uploaderHelper = null;
-    private ?string $adminPrefix = null;
+    private EntityManagerInterface $em;
+    private UploaderHelper $uploaderHelper;
+    private string $adminPrefix;
 
     public function __construct(
-        ?EntityManagerInterface $em = null,
-        ?UploaderHelper $uploaderHelper = null,
-        ?string $adminPrefix = null
+        EntityManagerInterface $em,
+        UploaderHelper $uploaderHelper,
+        string $adminPrefix
     ) {
         $this->em = $em;
         $this->uploaderHelper = $uploaderHelper;
@@ -52,7 +50,7 @@ class AttachmentType extends TextType implements DataTransformerInterface
             'required' => false,
             'attr' => [
                 'is' => 'input-attachment',
-                'data-endpoint' => '/'.trim('admin', '/').'/attachment',
+                'data-endpoint' => '/'.trim($this->adminPrefix, '/').'/attachment',
             ],
             'constraints' => [
                 new AttachmentExist(),

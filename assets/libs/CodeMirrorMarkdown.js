@@ -240,7 +240,7 @@ CodeMirror.defineMode(
 
                 // Add this list item's content's indentation to the stack
                 state.listStack.push(state.indentation)
-                // Reset inline styles which shouldn't propagate aross list items
+                // Reset inline css which shouldn't propagate aross list items
                 state.em = false
                 state.strong = false
                 state.code = false
@@ -393,7 +393,7 @@ CodeMirror.defineMode(
             if (state.linkHref) {
                 styles.push(tokenTypes.linkHref, 'url')
             } else {
-                // Only apply inline styles to non-url text
+                // Only apply inline css to non-url text
                 if (state.strong) {
                     styles.push(tokenTypes.strong)
                 }
