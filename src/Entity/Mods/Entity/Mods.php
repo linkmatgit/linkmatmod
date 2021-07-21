@@ -6,6 +6,7 @@ namespace App\Entity\Mods\Entity;
 use App\Entity\Application\Entity\Content;
 use App\Entity\Auth\User;
 use App\Repository\ModsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ModsRepository::class)]
 #[ORM\Table("mods_fs")]
-class Mods extends Content {
+final class Mods extends Content {
 
 
     #[ORM\ManyToOne(targetEntity: ModsBrand::class)]
@@ -24,8 +25,7 @@ class Mods extends Content {
     private string $price;
 
     #[ORM\ManyToMany(targetEntity: User::class)]
-    #[ORM\JoinTable(name: 'mods_team_users')]
-    private ?User $team = null;
+    private ?Collection $team = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $size = null;
@@ -49,6 +49,11 @@ class Mods extends Content {
     #[ORM\Column(type: Types::BOOLEAN, options: ['default' => 0])]
 
     private bool $public = false;
+
+    public function __construct()
+    {
+        $this->team = new ArrayCollection();
+    }
 
     /**
      * @return ModsBrand
@@ -88,21 +93,35 @@ class Mods extends Content {
         return $this;
     }
 
+
+    public function setIntervenants(?array $team): self
+    {
+        $this->team = new ArrayCollection($team);
+
+        return $this;
+    }
+
     /**
-     * @return Collection|null
+     * @return Collection|User[]
      */
-    public function getTeam(): ?Collection
+    public function getIntervenants(): Collection
     {
         return $this->team;
     }
 
-    /**
-     * @param Collection|null $team
-     * @return Mods
-     */
-    public function setTeam(?Collection $team): Mods
+    public function addIntervenant(User $team): self
     {
-        $this->team = $team;
+        if (!$this->team->contains($team)) {
+            $this->team[] = $team;
+        }
+
+        return $this;
+    }
+
+    public function removeIntervenant(User $team): self
+    {
+        $this->team->removeElement($team);
+
         return $this;
     }
 
