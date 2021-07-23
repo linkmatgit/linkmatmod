@@ -21,14 +21,14 @@ class PageController extends AbstractController {
 
     }
 
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'home')]
     public function homePage(): Response{
        return $this->render('index.html.twig', [
            'posts' => $this->postRepository->getFourLastTopicPublic(),
            'mods' => $this->modsRepository->findAll()
        ]);
     }
-    #[Route('/layout', name: 'app_vite')]
+    #[Route('/layout', name: 'vite')]
     public function getVite():Response{
         return $this->render('layout.html.twig');
     }

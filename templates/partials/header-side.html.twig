@@ -7,9 +7,9 @@
     </li>
     {% if app.user %}
         <li class="header__account">
-            <a href="{{ path('profil_update') }}" {{ menu_active('account') }}>
+            <a href="{{ path('app_profil_update') }}" {{ menu_active('account') }}>
               {{ icon('user') }}
-                <span>{{ app.user.username }}</span>
+                <span>{{ app.user.userIdentifier }}</span>
             </a>
 
         </li>
@@ -26,6 +26,7 @@
         <li class="header-side__auth">
             <a href="{{ path('app_register') }}" {{ menu_active('register') }}>
                 {{ icon('user') }}
+
                 <span>S'inscrire</span>
             </a>
             <span class="text-muted">·</span>

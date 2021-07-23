@@ -15,17 +15,17 @@ class ForumPathNormalizer extends Normalizer
     {
         if ($object instanceof ForumTag) {
             return [
-                'path' => 'forum_tag',
+                'path' => 'app_forum_tag',
                 'params' => ['id' => $object->getId(), 'slug' => $object->getSlug()],
             ];
         } elseif ($object instanceof ForumTopic) {
             return [
-                'path' => 'forum_show',
+                'path' => 'app_forum_show',
                 'params' => ['id' => $object->getId()],
             ];
         } elseif ($object instanceof ForumMessage) {
             return [
-                'path' => 'forum_show',
+                'path' => 'app_forum_show',
                 'params' => ['id' => $object->getTopic()->getId()],
                 'hash' => 'message-'.$object->getId(),
             ];

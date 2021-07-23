@@ -33,3 +33,14 @@ App\Entity\Forum\Entity\ForumTag:
 
 App\Entity\Forum\Entity\ForumTopic:
   topic{1..550} (extends topic):
+
+App\Entity\Work\Work:
+  work{1..50} (extends work):
+
+App\Entity\Work\WorkTopic:
+  worktopic{1..150} (extends worktopic):
+    tag: '@work*'
+
+App\Entity\Work\WorkMessage:
+  workmessage{1..550} (extends workmessage):
+    topics: '@worktopic*'

@@ -27,13 +27,14 @@ class PostRepository extends AbstractRepository
     }
 
 
-    public function getFourLastTopicPublic(){
-       return $this->createQueryBuilder('p')
+    public function getFourLastTopicPublic(?Category $category = null): array{
+       $query = $this->createQueryBuilder('p')
             ->orderBy('p.createdAt', 'DESC')
-            ->where('p.online =  true')
-            ->setMaxResults(self::LIMIT)
-            ->getQuery()
-            ->getResult();
+           ->where('p.online = true AND p.createdAt < NOW()')
+
+            ->setMaxResults(self::LIMIT);
+
+           return $query->getQuery()->getResult();
     }
     public function queryAll(?Category $category = null): Query
     {

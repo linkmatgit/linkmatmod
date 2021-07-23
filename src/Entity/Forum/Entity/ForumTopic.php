@@ -44,7 +44,7 @@ class ForumTopic {
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: ForumTag::class, inversedBy: ForumTopic::class)]
+    #[ORM\ManyToMany(targetEntity: ForumTag::class, inversedBy: 'topics')]
     #[ORM\JoinTable(name: 'forum_topic_tag')]
     #[Assert\NotBlank]
     #[Count(min: 1, max: 3)]
@@ -54,7 +54,7 @@ class ForumTopic {
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private User $author;
 
-    #[ORM\OneToMany(mappedBy: ForumTopic::class, targetEntity: ForumMessage::class)]
+    #[ORM\OneToMany(mappedBy: 'topic', targetEntity: ForumMessage::class)]
     private Collection $messages;
 
     #[ORM\ManyToOne(targetEntity: ForumMessage::class)]

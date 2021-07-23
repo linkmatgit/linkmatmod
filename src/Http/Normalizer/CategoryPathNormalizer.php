@@ -14,7 +14,7 @@ class CategoryPathNormalizer extends Normalizer
     {
         if ($object instanceof Category) {
             return [
-                'path' => 'blog_category',
+                'path' => 'app_blog_category',
                 'params' => ['slug' => $object->getSlug()],
             ];
         }

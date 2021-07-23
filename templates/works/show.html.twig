@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="flex">
+        {{ wips.title }} -- {{ wips.author.userIdentifier }} -- {{ wips.updatedAt | ago }}
+    </div>
+ {{ wips.content }}
+
+    {% for topic in work.topics %}
+        {{ topic.name }}
+    {% endfor %}
+{% endblock %}

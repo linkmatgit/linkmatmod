@@ -1,5 +1,5 @@
 import { cloneElement } from 'preact'
-import { Icon } from '/components/Icon.jsx'
+import { Icon } from '/Components/Icon.jsx'
 import { classNames } from '/functions/dom.js'
 
 /**

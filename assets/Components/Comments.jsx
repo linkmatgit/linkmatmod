@@ -1,15 +1,15 @@
-import { canManage, isAuthenticated } from '/functions/auth.js'
-import { Icon } from '/components/Icon.jsx'
+import { canManage, isAuthenticated } from '/functions/AuthJs.js'
+import { Icon } from '/Components/Icon.jsx'
 import { memo } from 'preact/compat'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { addComment, deleteComment, findAllComments, updateComment } from '/api/comments.js'
-import { PrimaryButton, SecondaryButton } from '/components/Button.jsx'
-import { Flex } from '/components/Layout.jsx'
-import { Field } from '/components/Form.jsx'
+import { PrimaryButton, SecondaryButton } from '/Components/Button.jsx'
+import { Flex } from '/Components/Layout.jsx'
+import { Field } from '/Components/Form.jsx'
 import { scrollTo } from '/functions/animation.js'
 import { catchViolations } from '/functions/api.js'
 import { useVisibility, useAsyncEffect } from '/functions/hooks.js'
-import { Markdown } from '/components/Markdown.jsx'
+import { Markdown } from '/Components/Markdown.jsx'
 
 /**
  * Affiche les commentaires associé à un contenu
@@ -27,17 +27,14 @@ export function Comments ({ target, parent }) {
   })
   const count = state.comments ? state.comments.length : null
   const isVisible = useVisibility(parent)
+
   const comments = useMemo(() => {
     if (state.comments === null) {
       return null
     }
-    return state.comments.filter(c => c.parent === 0).sort((a, b) => b.createdAt - a.createdAt)
+    return state.comments.sort((a, b) => b.createdAt - a.publishAt)
   }, [state.comments])
 
-  // Trouve les commentaire enfant d'un commentaire
-  function repliesFor (comment) {
-    return state.comments.filter(c => c.parent === comment.id)
-  }
 
   // On commence l'édition d'un commentaire
   const handleEdit = useCallback(comment => {
@@ -126,7 +123,10 @@ export function Comments ({ target, parent }) {
           </>
         )}
       </div>
-      <CommentForm onSubmit={handleCreate} />
+      {isAuthenticated() && (
+          <CommentForm onSubmit={handleCreate} />
+      )}
+
       <hr />
       <div className='comment-list'>
         {comments ? (
@@ -138,22 +138,9 @@ export function Comments ({ target, parent }) {
               onEdit={handleEdit}
               onUpdate={handleUpdate}
               onDelete={handleDelete}
-              onReply={handleReply}
             >
-              {repliesFor(comment).map(reply => (
-                <Comment
-                  key={reply.id}
-                  comment={reply}
-                  editing={state.editing === reply.id}
-                  onEdit={handleEdit}
-                  onUpdate={handleUpdate}
-                  onDelete={handleDelete}
-                  onReply={handleReply}
-                />
-              ))}
-              {state.reply === comment.id && (
-                <CommentForm onSubmit={handleCreate} parent={comment.id} onCancel={handleCancelReply} />
-              )}
+
+
             </Comment>
           ))
         ) : (
@@ -255,10 +242,6 @@ const Comment = memo(({ comment, editing, onEdit, onUpdate, onDelete, onReply, c
         <div className='comment__actions'>
           <a className='comment__date' href={`#c${comment.id}`}>
             <time-ago time={comment.createdAt} />
-          </a>
-          <a href={anchor} onClick={handleReply}>
-            <Icon name='reply' />
-            Répondre
           </a>
           {canEdit && (
             <a href={anchor} onClick={handleEdit}>

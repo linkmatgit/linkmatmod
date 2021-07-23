@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    {% if app.user %}
+        <div class="action__work__header">
+
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="#" class="pill-red"> {{ wips | length }} </a>
+        {% endif %}
+        <a href="{{ path('app_wipOwn_index') }}" class="btn-primary-outlined">Voir mes WIP</a>
+        </div>
+    {% endif %}
+    {% for wip in wips %}
+
+            <article class="card">
+                <div class="card__body stack">
+                    <h2 class="card__title">{{ wip.title }}</h2>
+                    <div class="meta__works">{{ wip.author.userIdentifier }} -- {{ wip.updatedat | ago }}</div>
+                    <div class="card__description text-small">
+                        {{ wip.content | striptags | excerpt(130) | raw }}
+                    </div>
+                </div>
+                <a href="{{ path('app_wip_show', { id: wip.id}) }}">Voir</a>
+                {% if app.user ==  wip.author%}
+
+                {% endif %}
+            </article>
+
+        {% endfor %}
+{% endblock %}
+
+

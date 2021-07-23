@@ -22,3 +22,18 @@ App\Entity\Forum\Entity\ForumMessage:
       normalization_context:
         groups: ['read:message']
       security: is_granted("UPDATE_FORUM_MESSAGE", object)
+App\Entity\Work\WorkTopic:
+  shortName: 'work/topic'
+  collectionOperations: []
+  itemOperations:
+    get:
+      normalization_context:
+        groups: ['read:message']
+    delete:
+      security: is_granted("DELETE_FORUM_MESSAGE", object)
+    put:
+      denormalization_context:
+        groups: ['update:message']
+      normalization_context:
+        groups: ['read:message']
+      security: is_granted("UPDATE_FORUM_MESSAGE", object)

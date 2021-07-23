@@ -28,7 +28,7 @@ class ForumController extends AbstractController {
     {
     }
 
-    #[Route('/forum', name: 'app_forum')]
+    #[Route('/forum', name: 'forum')]
     public function index(Request $request): Response
     {
         return $this->tag(null, $request);

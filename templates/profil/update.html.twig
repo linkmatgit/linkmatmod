@@ -2,6 +2,8 @@
 
 {% block body %}
 
+
+    <a href="{{ path('app_wipOwn_index') }}">WIP</a>
     {% if user is not null %}
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('admin_app_dashboard') }}">Administration</a>

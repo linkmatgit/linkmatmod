@@ -14,7 +14,7 @@ class PostPathNormalizer extends Normalizer
     {
         if ($object instanceof Post) {
             return [
-                'path' => 'blog_show',
+                'path' => 'app_blog_show',
                 'params' => ['slug' => $object->getSlug(), 'id' => $object->getId()],
             ];
         }

@@ -12,6 +12,10 @@ import {Dropdown} from "/Elements/Dropdown";
 import {AjaxDelete} from "/Elements/AjaxDelete";
 import LoaderOverlay from "/Elements/LoaderOverlay";
 import SpinningDots from '@grafikart/spinning-dots-element'
+import preactCustomElement from '/functions/preact.js'
+import {Comments} from "/Components/Comments";
+import '/Elements/works/index'
+import Turbolinks from 'turbolinks'
 
 customElements.define('alert-message', Alert)
 customElements.define('alert-floating', FloatingAlert)
@@ -27,3 +31,5 @@ customElements.define('drop-down', Dropdown)
 customElements.define('ajax-delete', AjaxDelete)
 customElements.define('loader-overlay', LoaderOverlay)
 customElements.define('spinning-dots', SpinningDots)
+preactCustomElement('comments-area', Comments, ['target'])
+Turbolinks.start()

@@ -33,7 +33,7 @@
                 <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('bl3og') }}>{{ icon('pen') }} Forum</a></li>
 
                 <li class="title">Utilisateur & Team</li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('b3log') }}>{{ icon('pen') }} Utilisateur</a></li>
+                <li><a href="{{ path('admin_user_index') }}" {{ menu_active('users') }}>{{ icon('user') }} Utilisateur</a></li>
                 <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('b3log') }}>{{ icon('pen') }} Team</a></li>
 
                 <li class="title">Configuration & Stats</li>
@@ -51,8 +51,8 @@
             {% endif %}
         </div>
         <ul class="dashboard-topbar__nav">
-
-            <li class="header__logout"><a href="/">{{ icon('logout') }}</a></li>
+            <li class="header__logout">
+                <a href="/">{{ icon('logout') }}</a></li>
         </ul>
     </aside>
     <main class="dashboard-body">

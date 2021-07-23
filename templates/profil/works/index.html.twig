@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if count is empty %}
+        <section class="main__work container-narrow mt5">
+            <div class="card p5 stack-large">
+                <h1 class=hero-title>Vous n'avez pas de <strong>WIP</strong></h1>
+                <div class="content__notWork">
+                    <p class="hero-text">
+                        Un WIP permet de tenir au courant la communauté Farming Simulator de
+                        l'avancée de vos projets en cours.
+                        Vous pouvez ensuite ajouter des mises à jour à propos de vos WIP.</p>
+                </div>
+                <div class="action__work">
+                    <a href="{{ path('app_wipOwn_create') }}" class="btn-secondary">
+                        Cree un WIP
+                    </a>
+                </div>
+            </div>
+            </section>
+        {% endif %}
+    {% if works | length > 0 %}
+        <div class="flex container">
+            <div><h2 class="hero-title container mt3">Vos <strong>"WIP"</strong>approuvée</h2></div>
+            <div class="create__wip__header"><a class="btn-primary" href="{{ path('app_wipOwn_create') }}">Cree un wip</a> </div>
+        </div>
+
+    <section class="container stack-large wip mt3">
+
+        {% for work in works %}
+
+            <article class="card">
+                <div class="card__body stack">
+                    <h2 class="card__title">{{ work.title }}</h2>
+                    <div class="card__description text-small">
+                        {{ work.content | striptags | excerpt(130) | raw }}
+                    </div>
+                </div>
+                {% if app.user ==  work.author%}
+                    {% if work.statut  == 1 %}
+                        <div class="flex card__footer">
+                            <a href="{{ path("app_wipOwn_edit", {id: work.id}) }}">Editée</a>
+                            <a href="{{ path("app_wip_show", {id: work.id}) }}">Voir</a>
+                            <work-delete topic="{{ work.id }}" owner="{{ work.author.id }}"></work-delete>
+                        </div>
+
+                    {% endif %}
+                {% endif %}
+
+            </article>
+
+        {% endfor %}
+    </section>
+
+    {% endif %}
+    {% if privates | length > 0 %}
+    <h2 class="hero-title container">Vos <strong>"WIP"</strong> pas approuvée</h2>
+    <section class="container stack-large wip mt3">
+   {% for private in privates %}
+
+        <article class="card wip__card">
+            <div class="card__body stack">
+                <h2 class="card__title">{{ private.title }}</h2>
+                <div class="card__description text-small">
+                    {{ private.content | striptags | excerpt(130) | raw }}
+                </div>
+            </div>
+            {% if app.user ==  private.author%}
+               {% if private.statut  == 1 %}
+                    <a href="{{ path("app_wipOwn_edit", {id: private.id}) }}">Editée</a>
+                    <work-delete topic="{{ private.id }}" owner="{{ private.author.id }}"></work-delete>
+                 {% endif %}
+            {% endif %}
+        </article>
+
+    {% endfor %}
+
+</section>
+    {% endif %}
+{% endblock %}
+
+

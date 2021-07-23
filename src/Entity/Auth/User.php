@@ -107,7 +107,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->id = $id;
         return $this;
     }
-
+    /**
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->username;
+    }
     /**
      * @return string
      */
@@ -125,7 +132,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->username = $username;
         return $this;
     }
-
 
     /**
      * @return array

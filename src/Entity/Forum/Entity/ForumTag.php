@@ -60,13 +60,14 @@ class ForumTag {
     private Collection $children;
 
 
-    #[ORM\ManyToMany(targetEntity: ForumTopic::class, mappedBy: ForumTag::class)]
+    #[ORM\ManyToMany(targetEntity: ForumTopic::class, mappedBy: 'tags')]
     private Collection $topics;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $color = null;
 
-    #[Pure]
+
+
     public function __construct()
     {
         $this->topics = new ArrayCollection();

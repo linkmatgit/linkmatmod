@@ -3,10 +3,10 @@
 namespace App\Entity\Application\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Entity\Attachment\Attachment;
 use App\Entity\Auth\User;
 use App\Entity\Blog\Post;
 use App\Entity\Mods\Entity\Mods;
+use App\Entity\Work\Work;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints\Date;
@@ -18,7 +18,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\DiscriminatorColumn(name: "type", type: "string")]
 #[ORM\DiscriminatorMap([
     'post' => Post::class,
-    'mods'=> Mods::class
+    'mods'=> Mods::class,
+    'work' => Work::class
 ])]
 #[ApiResource(
     collectionOperations: [],
@@ -37,8 +38,8 @@ abstract class Content
     #[Groups(['read:comment'])]
     private ?string $title =  null;
 
-    #[ORM\Column(type: 'string', unique: true)]
-    private string $slug =  '';
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $slug =  null;
 
     #[ORM\Column(type: 'text')]
     #[NotBlank]
@@ -57,10 +58,6 @@ abstract class Content
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $online = false;
-
-    #[ORM\ManyToOne(targetEntity: Attachment::class, cascade: ['persist'])]
-    #[ORM\JoinColumn(name: 'attachment_id', referencedColumnName: 'id')]
-    private ?Attachment $image = null;
 
     public function __construct()
     {
@@ -104,22 +101,24 @@ abstract class Content
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSlug(): string
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
 
     /**
-     * @param string $slug
+     * @param string|null $slug
      * @return Content
      */
-    public function setSlug(string $slug): Content
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
         return $this;
     }
+
+
 
     /**
      * @return string|null
@@ -211,29 +210,6 @@ abstract class Content
         return $this;
     }
 
-    /**
-     * @return Attachment|null
-     */
-    public function getImage(): ?Attachment
-    {
-        return $this->image;
-    }
-
-    /**
-     * @param Attachment|null $image
-     * @return Content
-     */
-    public function setImage(?Attachment $image): Content
-    {
-        $this->image = $image;
-        return $this;
-    }
-    public  function createSlug($str, $delimiter = '-'){
-
-        $slug = strtolower(trim(preg_replace('/[\s-]+/', $delimiter, preg_replace('/[^A-Za-z0-9-]+/', $delimiter, preg_replace('/[&]/', 'and', preg_replace('/[\']/', '', iconv('UTF-8', 'ASCII//TRANSLIT', $str))))), $delimiter));
-        return $slug;
-
-    }
 
 
 

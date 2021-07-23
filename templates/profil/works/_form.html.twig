@@ -1,0 +1,33 @@
+<div class="container">
+
+    <main class="card mt4 p3">
+ {{ form_start(form, {attr: {class: 'stacked' }}) }}
+<section>
+    <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
+
+    <div class="grid">
+
+        {{ form_row(form.title, { 'label': 'Nom du Projet' }) }}
+        {{ form_row(form.category, { 'label': 'Category du travail' }) }}
+        {% if is_granted('ROLE_ADMIN') %}
+        {{ form_row(form.statut) }}
+        {% endif %}
+        <div class="form-group">
+        <label for="user">Nom de l'auteur</label>
+       <input type="text" class="form-control" id="user" disabled value="{{ app.user.userIdentifier }}" />
+        </div>
+
+    </div>
+
+</section>
+<section class="stack-large">
+    <div class="full">
+        {{ form_row(form.content, { 'label': 'Description du projet' }) }}
+    </div>
+    <div class="full">
+        <button type="submit" class="btn-gradient">Sauvegarder</button>
+    </div>
+</section>
+
+{{ form_end(form) }}</main>
+</div>

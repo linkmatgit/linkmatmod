@@ -3,6 +3,7 @@
 namespace App\Entity\Config;
 
 use App\Repository\ConfigurationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -14,25 +15,23 @@ class Configuration
 {
     #[Id]
     #[GeneratedValue(strategy: "IDENTITY")]
-    #[Column(type: 'integer')]
+    #[Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[Column(type: 'string', nullable: true)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $title = null;
 
-    #[Column(type: 'string', nullable: true)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $colorHeader =  null;
 
-   #[Column(type: 'string', nullable: true)]
+   #[Column(type: Types::STRING, nullable: true)]
     private ?string $colorFooter = null;
 
-    #[Column(type: 'string', nullable: true)]
+    #[Column(type: Types::STRING, nullable: true)]
     private ?string $copyright = null;
 
-    #[Column(type: 'datetime', nullable: true)]
+    #[Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
-
-
 
     /**
      * @return int|null

@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 class Post extends Content
 {
 
-    #[ManyToOne(targetEntity: 'App\Entity\Blog\Category', inversedBy: "post")]
+    #[ManyToOne(targetEntity: 'App\Entity\Blog\Category', inversedBy: "posts")]
     #[JoinColumn(onDelete: 'SET NULL')]
     private ?Category $category = null;
 

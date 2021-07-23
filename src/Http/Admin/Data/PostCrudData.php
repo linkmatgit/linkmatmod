@@ -35,7 +35,6 @@ class PostCrudData implements CrudDataInterface
 
     private Post $entity ;
 
-    private ?Attachment $image = null;
 
 
     #[Pure]
@@ -49,7 +48,7 @@ class PostCrudData implements CrudDataInterface
         $this->content = $post->getContent();
         $this->author = $post->getAuthor();
         $this->online = $post->isOnline();
-        $this->image = $post->getImage();
+
 
     }
     public function hydrate(): void
@@ -62,7 +61,7 @@ class PostCrudData implements CrudDataInterface
             $this->entity->setUpdatedAt(new \DateTime());
             $this->entity->setAuthor($this->author);
             $this->entity->setSlug($this->slug);
-            $this->entity->setImage($this->image);
+
     }
 
     public function setEntityManager(EntityManagerInterface $em): self

@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/blog', name: 'blog_')]
 class BlogController extends AbstractController
 {
 
@@ -26,14 +26,14 @@ class BlogController extends AbstractController
     {
     }
 
-    #[Route('blog/', name: 'app_blog')]
+    #[Route('/', name: 'index')]
     public function index(Request $request): Response {
         $title = 'Blog';
         $query = $this->postRepository->queryAll();
 
         return $this->renderListing($title, $query, $request);
     }
-    #[Route('/blog/category/{slug}', name: 'blog_category')]
+    #[Route('/category/{slug}', name: 'category')]
     public function category(Category $category, Request $request): Response
     {
         $title = $category->getName();
@@ -42,7 +42,7 @@ class BlogController extends AbstractController
         return $this->renderListing($title, $query, $request, ['category' => $category]);
     }
 
-    #[Route('blog/{slug<[a-z0-9\-]+>}-{id<\d+>}', name: 'blog_show', priority: 10)]
+    #[Route('/{slug<[a-z0-9\-]+>}-{id<\d+>}', name: 'show', priority: 10)]
       public function show(Post $post): Response {
 
         return $this->render('blog/show.html.twig',

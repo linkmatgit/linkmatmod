@@ -3,8 +3,6 @@
 namespace App\Http\Form;
 
 
-use App\Entity\Attachment\Attachment;
-use App\Entity\Attachment\Type\AttachmentType;
 use App\Http\Admin\Type\UserChoiceType;
 use App\Http\Type\CategoryType;
 use App\Http\Type\DateTimeType;
@@ -34,7 +32,6 @@ class AutomaticForm extends AbstractType
         UploadedFile::class => FileType::class,
         DateTimeInterface::class => DateTimeType::class,
         'bool' => SwitchType::class,
-        Attachment::class => AttachmentType::class,
     ];
 
     const NAMES = [

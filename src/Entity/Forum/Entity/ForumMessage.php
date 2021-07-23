@@ -43,7 +43,7 @@ class ForumMessage {
     #[Column(type: 'datetime')]
     private \DateTimeInterface $updatedAt;
 
-    #[ManyToOne(targetEntity: User::class)]
+    #[ManyToOne(targetEntity: ForumTopic::class, inversedBy: 'messages')]
     #[JoinColumn(name: 'topic_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
     private ForumTopic $topic;
 
@@ -53,9 +53,8 @@ class ForumMessage {
     #[Column(type: 'boolean', options: ['default' => 0])]
     private bool $accepted = false;
 
-    /**
-     * @return int|null
-     */
+
+
     public function getId(): ?int
     {
         return $this->id;
