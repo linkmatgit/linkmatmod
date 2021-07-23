@@ -4,89 +4,185 @@ namespace App\Entity\Work;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use App\Entity\Auth\User;
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity()]
-#[ORM\Table('wip_topic')]
+#[ORM\Table(name: 'wip_topic')]
 class WorkTopic
 {
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ApiProperty(identifier: true)]
     #[ORM\Column(type: Types::INTEGER)]
-    private ?int $id;
+    private ?int $id = null;
 
-    #[Assert\NotBlank]
-    #[ORM\Column(type: Types::STRING)]
-    private string $name;
 
-    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::STRING, length: 70)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 5, max: 70)]
+    #[Groups(['read:worktopic'])]
+    private string $name = '';
+
     #[ORM\Column(type: Types::TEXT)]
-    private string $content;
+    #[Assert\NotBlank()]
+    #[Groups(['read:worktopic'])]
+    private ?string $content = null;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: false)]
-    private \DateTimeInterface $createdAt;
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $solved = false;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private ?bool $sticky = false;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $createdAt = null;
+
+    #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete: 'CASCADE')]
-    private User $author;
 
     #[ORM\ManyToOne(targetEntity: Work::class, inversedBy: 'topics')]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
-    private Collection $tags;
+    private Work $tags;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
+    private User $author;
+
+
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    private int $messageCount = 0;
+
 
     #[ORM\OneToMany(mappedBy: 'topic', targetEntity: WorkMessages::class)]
-    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\OrderBy(['accepted' => 'DESC', 'createdAt' => 'ASC'])]
     private Collection $messages;
+
+
+    #[ORM\ManyToOne(targetEntity: WorkMessages::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
+    private ?WorkMessages $lastMessage = null;
 
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
         $this->messages = new ArrayCollection();
     }
 
-
-    /**
-     * @param ArrayCollection|Collection $tags
-     * @return WorkTopic
-     */
-    public function setTags(ArrayCollection|Collection $tags): WorkTopic
+    public function getId(): ?int
     {
-        $this->tags = $tags;
-        return $this;
+        return $this->id;
     }
 
-    /**
-     * @return Collection|Work]
-     */
-    public function getTags(): Collection
+    public function setId(int $id): self
     {
-        return $this->tags;
-    }
-
-    public function addTag(Work $tag): self
-    {
-        if (!$this->tags->contains($tag)) {
-            $this->tags[] = $tag;
-        }
+        $this->id = $id;
 
         return $this;
     }
 
-    public function removeTag(Work $tag): self
+    public function getName(): string
     {
-        if ($this->tags->contains($tag)) {
-            $this->tags->removeElement($tag);
-        }
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name ?: '';
 
         return $this;
+    }
+
+    public function getContent(): ?string
+    {
+        return $this->content;
+    }
+
+    public function setContent(?string $content): self
+    {
+        $this->content = $content ?: '';
+
+        return $this;
+    }
+
+    public function isSolved(): ?bool
+    {
+        return $this->solved;
+    }
+
+    public function setSolved(bool $solved): self
+    {
+        $this->solved = $solved;
+
+        return $this;
+    }
+
+    public function getSticky(): ?bool
+    {
+        return $this->sticky;
+    }
+
+    public function setSticky(bool $sticky): self
+    {
+        $this->sticky = $sticky;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): \DateTimeInterface
+    {
+        return $this->createdAt ?: new \DateTime();
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getAuthor(): User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(User $author): self
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getMessageCount(): ?int
+    {
+        return $this->messageCount;
+    }
+
+    public function setMessageCount(int $messageCount): self
+    {
+        $this->messageCount = $messageCount;
+
+        return $this;
+    }
+
+    public function getLastMessage(): ?WorkMessages
+    {
+        return $this->lastMessage;
     }
 
     /**
@@ -117,113 +213,36 @@ class WorkTopic
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getId(): ?int
+    public function setLastMessage(?WorkMessages $lastMessage): self
     {
-        return $this->id;
-    }
+        $this->lastMessage = $lastMessage;
 
-    /**
-     * @param int|null $id
-     * @return WorkTopic
-     */
-    public function setId(?int $id): WorkTopic
-    {
-        $this->id = $id;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function isLocked(): bool
     {
-        return $this->name;
+        return $this->getCreatedAt() < (new \DateTime('-6 month'));
     }
 
     /**
-     * @param string $name
+     * @return Work
+     */
+    public function getTags(): Work
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param Work $tags
      * @return WorkTopic
      */
-    public function setName(string $name): WorkTopic
+    public function setTags(Work $tags): self
     {
-        $this->name = $name;
+        $this->tags = $tags;
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param string $content
-     * @return WorkTopic
-     */
-    public function setContent(string $content): WorkTopic
-    {
-        $this->content = $content;
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getCreatedAt(): \DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @param \DateTimeInterface $createdAt
-     * @return WorkTopic
-     */
-    public function setCreatedAt(\DateTimeInterface $createdAt): WorkTopic
-    {
-        $this->createdAt = $createdAt;
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    /**
-     * @param \DateTimeInterface|null $updatedAt
-     * @return WorkTopic
-     */
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): WorkTopic
-    {
-        $this->updatedAt = $updatedAt;
-        return $this;
-    }
-
-    /**
-     * @return User
-     */
-    public function getAuthor(): User
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param User $author
-     * @return WorkTopic
-     */
-    public function setAuthor(User $author): WorkTopic
-    {
-        $this->author = $author;
-        return $this;
-    }
 
 
 

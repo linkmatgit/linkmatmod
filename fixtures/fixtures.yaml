@@ -39,8 +39,8 @@ App\Entity\Work\Work:
 
 App\Entity\Work\WorkTopic:
   worktopic{1..150} (extends worktopic):
-    tag: '@work*'
+    tags: '@work*'
 
-App\Entity\Work\WorkMessage:
+App\Entity\Work\WorkMessages:
   workmessage{1..550} (extends workmessage):
     topics: '@worktopic*'

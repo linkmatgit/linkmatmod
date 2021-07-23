@@ -79,13 +79,13 @@ App\Entity\Forum\Entity\ForumTopic:
 
 App\Entity\Work\Work:
   work (template):
-    title: <sentence(5, true)>
+    name: <sentence(5, true)>
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    approuved: true
+    approved: true
     author: '@user1'
-    statut: 1
+
 App\Entity\Work\WorkTopic:
   worktopic (template):
     name: <sentence(5, true)>
