@@ -87,7 +87,7 @@ App\Entity\Work\Work:
     author: '@user1'
 
 App\Entity\Work\WorkTopic:
-  worktopic (template):
+  w2orktopic (template):
     name: <sentence(5, true)>
     content: <text(1500)>
     created_at: <dateTimeThisYear()>

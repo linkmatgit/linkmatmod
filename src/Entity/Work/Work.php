@@ -22,7 +22,7 @@ class Work
     #[ORM\Column(type: Types::STRING, length: 70)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column(type: 'datetime')]
@@ -131,21 +131,27 @@ class Work
         return $this;
     }
 
-    /**
-     * @return ArrayCollection|Collection
-     */
-    public function getTopics(): ArrayCollection|Collection
-    {
+    public function getTopics(): Collection {
         return $this->topics;
+
     }
 
-    /**
-     * @param ArrayCollection|Collection $topics
-     * @return Work
-     */
-    public function setTopics(ArrayCollection|Collection $topics): Work
+    public function addTopics(WorkTopic $topic): self
     {
-        $this->topics = $topics;
+
+        if(!$this->topics->contains($topic)){
+            $this->topics[] = $topic;
+            $topic->setTags($this);
+        }
+        return $this;
+    }
+    public function removeTopic(WorkTopic $topic):self {
+        if($this->topics->removeElement($topic)){
+            if($topic->getTags() === $this) {
+                $topic->setTags(null);
+            }
+
+        }
         return $this;
     }
 

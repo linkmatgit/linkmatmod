@@ -21,7 +21,7 @@ class WorkMessages
 
     #[ORM\ManyToOne( targetEntity: WorkTopic::class, inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
-    private WorkTopic $topic;
+    private WorkTopic $topics;
 
     #[ORM\ManyToOne(targetEntity:User::class)]
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
@@ -61,12 +61,12 @@ class WorkMessages
 
     public function getTopic(): WorkTopic
     {
-        return $this->topic;
+        return $this->topics;
     }
 
-    public function setTopic(WorkTopic $topic): self
+    public function setTopic(WorkTopic $topics): self
     {
-        $this->topic = $topic;
+        $this->topics = $topics;
 
         return $this;
     }

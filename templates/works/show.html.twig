@@ -1,11 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <div class="container stack-large">
     <div class="flex">
-        {{ wips.title }} -- {{ wips.author.userIdentifier }} -- {{ wips.updatedAt | ago }}
+        {{ wips.name }} -- {{ wips.author.userIdentifier }} -- {{ wips.updatedAt | ago }}
     </div>
  {{ wips.content }}
 
-    {% for topic in work.topics %}
-        {{ topic.name }}
+    {% for topic in wips.topics %}
+        <div class="flex">
+          {{ topic.id}}
+            {{ topic.name }}
+            {{ topic.createdAt | ago }}
+            {{ topic.author.userIdentifier }}
+            {{ topic.content }}
+        </div>
     {% endfor %}
+    </div>
 {% endblock %}

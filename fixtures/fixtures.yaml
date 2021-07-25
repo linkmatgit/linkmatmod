@@ -38,9 +38,6 @@ App\Entity\Work\Work:
   work{1..50} (extends work):
 
 App\Entity\Work\WorkTopic:
-  worktopic{1..150} (extends worktopic):
+  w2orktopic{1..150} (extends w2orktopic):
     tags: '@work*'
 
-App\Entity\Work\WorkMessages:
-  workmessage{1..550} (extends workmessage):
-    topics: '@worktopic*'

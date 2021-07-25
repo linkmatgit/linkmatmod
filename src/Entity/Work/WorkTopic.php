@@ -47,10 +47,11 @@ class WorkTopic
 
 
     #[ORM\ManyToOne(targetEntity: Work::class, inversedBy: 'topics')]
+    #[ORM\JoinColumn(nullable: false)]
     private Work $tags;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
     private User $author;
 
 
@@ -58,7 +59,7 @@ class WorkTopic
     private int $messageCount = 0;
 
 
-    #[ORM\OneToMany(mappedBy: 'topic', targetEntity: WorkMessages::class)]
+    #[ORM\OneToMany(mappedBy: 'topics', targetEntity: WorkMessages::class)]
     #[ORM\OrderBy(['accepted' => 'DESC', 'createdAt' => 'ASC'])]
     private Collection $messages;
 
@@ -185,35 +186,7 @@ class WorkTopic
         return $this->lastMessage;
     }
 
-    /**
-     * @return Collection|WorkMessages[]
-     */
-    public function getMessages(): Collection
-    {
-        return $this->messages;
-    }
-
-    public function addMessage(WorkMessages $message): self
-    {
-        if (!$this->messages->contains($message)) {
-            $this->messages->add($message);
-            $message->setTopic($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Collection|WorkMessages[] $messages
-     */
-    public function setMessages(Collection $messages): self
-    {
-        $this->messages = $messages;
-
-        return $this;
-    }
-
-    public function setLastMessage(?WorkMessages $lastMessage): self
+       public function setLastMessage(?WorkMessages $lastMessage): self
     {
         $this->lastMessage = $lastMessage;
 
@@ -240,6 +213,26 @@ class WorkTopic
     public function setTags(Work $tags): self
     {
         $this->tags = $tags;
+        return $this;
+    }
+
+    public function getMessage(): Collection {
+        return $this->messages;
+    }
+    public function addMessage(WorkMessages $messages): self {
+        if(!$this->messages->contains($messages)) {
+            $this->messages[] = $messages;
+            $messages->setTopic($this);
+        }
+        return $this;
+    }
+
+    public function removeMessage(WorkMessages $messages): self{
+        if($this->messages->removeElement($messages)) {
+            if($messages->getTopic() === $this){
+                $messages->setTopic(null);
+            }
+        }
         return $this;
     }
 
