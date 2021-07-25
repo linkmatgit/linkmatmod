@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'wip_topic')]
 class WorkTopic
 {
+    use TypeChoice;
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ApiProperty(identifier: true)]

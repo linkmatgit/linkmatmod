@@ -94,8 +94,8 @@ App\Entity\Work\WorkTopic:
     updated_at: <dateTimeThisYear()>
     author: '@user1'
 
-App\Entity\Work\WorkMessage:
-  workmessage (template):
+App\Entity\Work\WorkMessages:
+  wipmessages (template):
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
