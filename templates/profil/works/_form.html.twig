@@ -7,10 +7,11 @@
 
     <div class="grid">
 
-        {{ form_row(form.title, { 'label': 'Nom du Projet' }) }}
-        {{ form_row(form.category, { 'label': 'Category du travail' }) }}
+        {{ form_row(form.name, { 'label': 'Nom du Projet' }) }}
+        {#  form_row(form.category, { 'label': 'Category du travail' }) #}
         {% if is_granted('ROLE_ADMIN') %}
-        {{ form_row(form.statut) }}
+            {{ form_row(form.statut) }}
+            {{ form_row(form.approved) }}
         {% endif %}
         <div class="form-group">
         <label for="user">Nom de l'auteur</label>

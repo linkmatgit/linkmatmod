@@ -3,6 +3,7 @@
 namespace App\Entity\Work;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
+use App\Entity\Attachments\Entity\WipAttachment;
 use App\Entity\Auth\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -69,9 +70,16 @@ class WorkTopic
     #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?WorkMessages $lastMessage = null;
 
+    #[ORM\OneToMany(mappedBy: 'topics', targetEntity: WipAttachment::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $pictures;
+
+
+    private string $pictureFiles;
     public function __construct()
     {
         $this->messages = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -237,7 +245,45 @@ class WorkTopic
         return $this;
     }
 
+    public function getPictures():Collection {
+        return $this->pictures;
+    }
+    public function getPicture(): ?WipAttachment {
+        if($this->pictures->isEmpty()){
+            return null;
+        }
+        return $this->pictures->first();
+    }
+    public function addPicture(WipAttachment $attachment):self{
+        if(!$this->pictures->contains($attachment)){
+            $this->pictures[] = $attachment;
+            $attachment->setTopic($this);
+        }
+        return $this;
+    }
+    public function removePicture(WipAttachment $attachment): self{
+        if ($this->pictures->contains($attachment)) {
+            $this->pictures->removeElement($attachment);
+            if($attachment->getTags() === $this) {
+                $attachment->setTopic(null);
+            }
+        }
+        return $this;
+    }
 
+    public function getPictureFile() {
+        return $this->getPictureFile();
+    }
+
+    public function setPictureFiles($pictureFiles): self {
+        foreach ($pictureFiles as $pictureFile) {
+            $attachment = new WipAttachment();
+            $attachment->setImageFile($pictureFiles);
+            $this->addPicture($attachment);
+        }
+        $this->pictureFiles = $pictureFiles;
+        return $this;
+    }
 
 
 }

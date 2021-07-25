@@ -11,6 +11,7 @@ use App\Repository\Forum\ForumTagRepository;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,9 +30,12 @@ class WorkType extends AbstractType
     {
         $tags = $this->tagRepository->findAllOrdered();
         $builder
-            ->add('title', TextType::class)
-            ->add('category', ModCategoryType::class)
+            ->add('name', TextType::class)
             ->add('content', EditorType::class)
+            ->add('pictureFiles', FileType::class, [
+                'required' => false,
+                'multiple' => true
+            ])
             ->add('statut', ChoiceType::class,[
                 'required' => true,
                 'choices' => array_flip(Work::$status),

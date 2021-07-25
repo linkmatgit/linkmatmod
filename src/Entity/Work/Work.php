@@ -2,12 +2,13 @@
 
 namespace App\Entity\Work;
 
+use App\Entity\Attachments\Entity\WipAttachment;
 use App\Entity\Auth\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity()]
 #[ORM\Table(name: 'wip_tag')]
 class Work
@@ -40,10 +41,16 @@ class Work
     #[ORM\JoinColumn(nullable: true, onDelete: 'CASCADE')]
     private User $author;
 
+    #[ORM\OneToMany(mappedBy: 'tags', targetEntity: WipAttachment::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $pictures;
+
+    #[Assert\Image(['image/jpg', 'image/jpeg', 'image/png'])]
+    public string $pictureFiles;
 
     public function __construct()
     {
         $this->topics = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
 
     }
 
@@ -155,6 +162,45 @@ class Work
         return $this;
     }
 
+    public function getPictures():Collection {
+        return $this->pictures;
+    }
+    public function getPicture(): ?WipAttachment {
+        if($this->pictures->isEmpty()){
+            return null;
+        }
+        return $this->pictures->first();
+    }
+    public function addPicture(WipAttachment $attachment):self{
+        if(!$this->pictures->contains($attachment)){
+            $this->pictures[] = $attachment;
+            $attachment->setTags($this);
+        }
+        return $this;
+    }
+    public function removePicture(WipAttachment $attachment): self{
+        if ($this->pictures->contains($attachment)) {
+            $this->pictures->removeElement($attachment);
+            if($attachment->getTags() === $this) {
+                $attachment->setTags(null);
+            }
+        }
+        return $this;
+    }
 
+    public function getPictureFile(): string
+    {
+        return $this->pictureFiles;
+    }
+
+    public function setPictureFiles($pictureFiles): self {
+        foreach ($pictureFiles as $pictureFile) {
+            $attachment = new WipAttachment();
+            $attachment->setImageFile($pictureFiles);
+            $this->addPicture($attachment);
+        }
+        $this->pictureFiles = $pictureFiles;
+        return $this;
+    }
 
 }
