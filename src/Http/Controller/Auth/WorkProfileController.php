@@ -61,7 +61,7 @@ class WorkProfileController extends AbstractController {
             $this->em->persist($work);
             $this->em->flush();
             $this->addFlash('success', 'Sujet Cree');
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_wipOwn_index');
         }
 
         return $this->render('profil/works/new.html.twig', [
@@ -76,12 +76,12 @@ class WorkProfileController extends AbstractController {
         $request =  $this->requestStack->getCurrentRequest();
         $form = $this->createForm(WorkType::class, $data);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data->setUpdatedAt(new \DateTime());
             $this->em->persist($data);
             $this->em->flush();
             $this->addFlash('success', 'Le contenu a bien été modifié');
-
             return $this->redirectToRoute('app_wipOwn_index' ,[], 301);
         }
 

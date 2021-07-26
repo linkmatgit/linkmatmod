@@ -68,4 +68,9 @@ class WorkRepository extends AbstractRepository
             ->andWhere('w.approved = false')
             ->getQuery();
     }
+    public function getManagerNeedToApprouve(): Query {
+        return $this->createQueryBuilder("w")
+            ->andWhere("w.approved = false")
+            ->getQuery();
+    }
 }

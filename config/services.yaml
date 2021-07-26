@@ -1,5 +1,6 @@
 parameters:
     admin_prefix:     '%env(resolve:ADMIN_PREFIX)%'
+    manager_prefix:     '%env(resolve:MANAGER_PREFIX)%'
     container.dumper.inline_factories: true
     container.dumper.inline_class_loader: true
     asset.request_context.secure: true
@@ -34,10 +35,15 @@ services:
     App\Http\Admin\Controller\:
         resource: '../src/Http/Admin/Controller'
         tags: ['controller.service_arguments']
-
+    App\Http\Manager\Controller\:
+        resource: '../src/Http/Manager/Controller'
+        tags: ['controller.service_arguments']
     App\Http\Api\Controller\:
         resource: '../src/Http/Api/Controller'
         tags: ['controller.service_arguments']
+
+    App\Http\Admin\Firewall\ManagerRequestListener:
+        arguments: ['%manager_prefix%']
 
     App\Http\Admin\Firewall\AdminRequestListener:
         arguments: ['%admin_prefix%']

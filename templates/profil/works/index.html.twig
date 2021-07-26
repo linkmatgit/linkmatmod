@@ -30,7 +30,7 @@
 
             <article class="card">
                 <div class="card__body stack">
-                    <h2 class="card__title">{{ work.title }}</h2>
+                    <h2 class="card__title">{{ work.name }}</h2>
                     <div class="card__description text-small">
                         {{ work.content | striptags | excerpt(130) | raw }}
                     </div>
@@ -59,7 +59,7 @@
 
         <article class="card wip__card">
             <div class="card__body stack">
-                <h2 class="card__title">{{ private.title }}</h2>
+                <h2 class="card__title">{{ private.name }}</h2>
                 <div class="card__description text-small">
                     {{ private.content | striptags | excerpt(130) | raw }}
                 </div>

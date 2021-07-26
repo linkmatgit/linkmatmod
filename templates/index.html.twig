@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    {% for post in posts %}
-        <a href="{{ path('app_blog_show', {id: post.id, slug: post.slug}) }}">{{ post.title }}</a>
-    {% endfor %}
+
 {% endblock %}
 

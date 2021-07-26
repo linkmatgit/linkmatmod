@@ -2,8 +2,10 @@
 
 namespace App\Entity\Work;
 
+use ApiPlatform\Core\Bridge\Doctrine\Common\Util\IdentifierManagerTrait;
 use App\Entity\Attachments\Entity\WipAttachment;
 use App\Entity\Auth\User;
+use App\Entity\Manager\ManageableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -14,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Work
 {
     use TypeChoice;
+    use ManageableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
@@ -44,8 +47,8 @@ class Work
     #[ORM\OneToMany(mappedBy: 'tags', targetEntity: WipAttachment::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $pictures;
 
-    #[Assert\Image(['image/jpg', 'image/jpeg', 'image/png'])]
-    public string $pictureFiles;
+
+    public $pictureFiles;
 
     public function __construct()
     {
@@ -188,15 +191,19 @@ class Work
         return $this;
     }
 
-    public function getPictureFile(): string
+    public function getPictureFile()
     {
         return $this->pictureFiles;
     }
 
-    public function setPictureFiles($pictureFiles): self {
+    /**
+     * @param mixed $pictureFiles
+     * @return Work
+     */
+    public function setPictureFiles(mixed $pictureFiles): self {
         foreach ($pictureFiles as $pictureFile) {
             $attachment = new WipAttachment();
-            $attachment->setImageFile($pictureFiles);
+            $attachment->setImageFile($pictureFile);
             $this->addPicture($attachment);
         }
         $this->pictureFiles = $pictureFiles;

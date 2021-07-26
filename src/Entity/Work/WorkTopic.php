@@ -5,6 +5,7 @@ namespace App\Entity\Work;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use App\Entity\Attachments\Entity\WipAttachment;
 use App\Entity\Auth\User;
+use App\Entity\Manager\ManageableTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -17,6 +18,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class WorkTopic
 {
     use TypeChoice;
+    use ManageableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     #[ApiProperty(identifier: true)]

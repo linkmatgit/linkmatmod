@@ -1,0 +1,31 @@
+<div class="card " style="padding: 15px">
+ {{ form_start(form, {attr: {class: 'stack' }}) }}
+    <section>
+    <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
+
+    <div class="grid">
+
+        {{ form_row(form.title) }}
+        {{ form_row(form.slug) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.author) }}
+        {{ form_row(form.createdAt) }}
+        {{ form_row(form.online) }}
+
+
+    </div>
+
+    </section>
+     <section class="stack-large">
+         <div class="full">
+             {{ form_row(form.content) }}
+         </div>
+         <div class="full">
+             <button type="submit" class="btn-gradient">Sauvegarder</button>
+         </div>
+     </section>
+
+ {{ form_end(form) }}
+
+
+</div>

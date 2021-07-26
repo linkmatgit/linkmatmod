@@ -2,13 +2,9 @@
 
 namespace App\Http\Form;
 
-
-use App\Entity\Work\Type\StatusType;
 use App\Entity\Work\Work;
-use App\Http\Form\Field\ModCategoryType;
 use App\Http\Type\EditorType;
 use App\Repository\Forum\ForumTagRepository;
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -32,10 +28,6 @@ class WorkType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('content', EditorType::class)
-            ->add('pictureFiles', FileType::class, [
-                'required' => false,
-                'multiple' => true
-            ])
             ->add('statut', ChoiceType::class,[
                 'required' => true,
                 'choices' => array_flip(Work::$status),

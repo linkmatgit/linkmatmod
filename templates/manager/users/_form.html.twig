@@ -1,0 +1,19 @@
+<div class="card " style="padding: 15px">
+ {{ form_start(form, {attr: {class: 'stack' }}) }}
+    <section>
+    <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
+
+    <div class="grid">
+
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.createdAt) }}
+    </div>
+
+    </section>
+
+
+ {{ form_end(form) }}
+
+
+</div>
