@@ -2,15 +2,17 @@
 
 namespace App\Entity\Work;
 
-use ApiPlatform\Core\Bridge\Doctrine\Common\Util\IdentifierManagerTrait;
 use App\Entity\Attachments\Entity\WipAttachment;
 use App\Entity\Auth\User;
 use App\Entity\Manager\ManageableTrait;
+use App\Entity\Teams\TeamProjectTrait;
+use App\Entity\Teams\Teams;
+use App\Entity\Teams\TeamsMembers;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity()]
 #[ORM\Table(name: 'wip_tag')]
 class Work
@@ -46,6 +48,12 @@ class Work
 
     #[ORM\OneToMany(mappedBy: 'tags', targetEntity: WipAttachment::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $pictures;
+
+    #[ORM\ManyToOne(targetEntity: Teams::class, inversedBy: 'project')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Teams $teams = null;
+
+
 
 
     public $pictureFiles;
@@ -209,5 +217,24 @@ class Work
         $this->pictureFiles = $pictureFiles;
         return $this;
     }
+
+    /**
+     * @return Teams|null
+     */
+    public function getTeams(): ?Teams
+    {
+        return $this->teams;
+    }
+
+    /**
+     * @param Teams|null $teams
+     * @return Work
+     */
+    public function setTeams(?Teams $teams): Work
+    {
+        $this->teams = $teams;
+        return $this;
+    }
+
 
 }

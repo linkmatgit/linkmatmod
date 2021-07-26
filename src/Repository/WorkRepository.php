@@ -31,7 +31,7 @@ class WorkRepository extends AbstractRepository
         return $this->createQueryBuilder('w')
             ->where('w.author = :user')
             ->orderBy('w.id', 'DESC')
-            ->andWhere('w.approved = false')
+            ->andWhere('w.approved = 0')
             ->setMaxResults(4)
             ->setParameter('user', $user)
             ->getQuery();
@@ -41,7 +41,7 @@ class WorkRepository extends AbstractRepository
         return $this->createQueryBuilder('w')
             ->where('w.author = :user')
             ->orderBy('w.id', 'DESC')
-            ->andWhere('w.approved = true')
+            ->andWhere('w.approved = 1')
             ->setMaxResults(4)
             ->setParameter('user', $user)
             ->getQuery();
@@ -50,7 +50,7 @@ class WorkRepository extends AbstractRepository
     public function queryAllPublic():Query {
         return $this->createQueryBuilder('w')
             ->orderBy('w.createdAt', 'DESC')
-            ->andWhere('w.approved = true')
+            ->andWhere('w.approved = 1')
             ->getQuery();
 
     }
@@ -65,12 +65,12 @@ class WorkRepository extends AbstractRepository
 
         return $this->createQueryBuilder('w')
             ->orderBy('w.id', 'DESC')
-            ->andWhere('w.approved = false')
+            ->andWhere('w.approved = 0')
             ->getQuery();
     }
     public function getManagerNeedToApprouve(): Query {
         return $this->createQueryBuilder("w")
-            ->andWhere("w.approved = false")
+            ->andWhere("w.approved = 0")
             ->getQuery();
     }
 }

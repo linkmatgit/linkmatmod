@@ -6,7 +6,9 @@ namespace App\Http\Manager\Controller;
 
 use App\Entity\Auth\User;
 use App\Entity\Work\Work;
+use App\Http\Manager\Form\DeclineWipType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,7 +31,7 @@ class WorkApprouveController extends ManagerCrudController
         $request = $this->requestStack->getCurrentRequest();
         $query = $this->getRepository()->createQueryBuilder('rows')
         ->orderBy('rows.createdAt', 'DESC')
-        ->where('rows.approved = false');
+        ->where('rows.approved = 0');
         if ($request->get('q')) {
             $query = $this->applySearch(trim($request->get('q')), $query);
         }
@@ -59,11 +61,25 @@ class WorkApprouveController extends ManagerCrudController
         $user = $this->getUser();
         $work->setApprouveBy($user);
         $work->setApprouvedAt(new \DateTime());
-        $work->setApproved(true);
+        $work->setApproved(1);
         $this->em->persist($work);
         $this->em->flush();
         $this->addFlash('success', 'Le Wip a bien ete mit en ligne');
        return $this->redirectToRoute('manager_wip_require_index');
     }
+    #[Route("/{id<\d+>}/decline", name: 'confirm', methods: 'POST')]
+    public function setDecline(Work $work, Request $request): Response {
 
+        $form = $this->createForm(DeclineWipType::class, $work);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+            $this->addFlash("Success", 'Le WIP a bien ete Refusée');
+            return $this->redirectToRoute('manager_home');
+        }
+        return $this->render('manager/works/decline/decline.html.twig', [
+            'work' => $work,
+            'form'     => $form->createView()
+        ]);
+    }
 }

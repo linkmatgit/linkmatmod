@@ -83,7 +83,6 @@ App\Entity\Work\Work:
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    approved: true
     author: '@user1'
 
 App\Entity\Work\WorkTopic:

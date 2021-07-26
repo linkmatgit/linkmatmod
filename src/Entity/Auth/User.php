@@ -2,6 +2,7 @@
 
 namespace App\Entity\Auth;
 
+use App\Entity\Teams\TeamUserTrait;
 use App\Repository\UserRepository;
 
 use Doctrine\DBAL\Types\Types;
@@ -30,6 +31,8 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 #[Table(name: "`user`")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TeamUserTrait;
+
     #[Id]
     #[GeneratedValue(strategy: "IDENTITY")]
     #[Column(type: Types::INTEGER)]

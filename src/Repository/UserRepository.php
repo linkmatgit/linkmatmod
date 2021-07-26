@@ -46,4 +46,15 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setCacheable(true)
             ->getResult();
     }
+
+    public function SearchUserForTeam(string $username): array {
+        return $this->createQueryBuilder('u')
+            ->where('u.username LIKE :user')
+            ->andWhere('u.teams IS null')
+            ->setParameter('user',  "%$username%")
+            ->setMaxResults(15)
+            ->getQuery()
+            ->setCacheable(true)
+            ->getResult();
+    }
 }

@@ -23,4 +23,11 @@ class UserController extends AdminAbstractController {
         return $this->json($this->r->SearchUser($request->query->get('q')));
 
     }
+
+    #[Route('/teams/user_autocomplete', name: 'user_team_autocomplete')]
+    public function userSearchForTeam(Request $request): Response
+    {
+        return $this->json($this->r->SearchUserForTeam($request->query->get('q')));
+
+    }
 }

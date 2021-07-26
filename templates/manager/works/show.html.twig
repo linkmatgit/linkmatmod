@@ -1,0 +1,16 @@
+{% extends 'manager/base.html.twig' %}
+
+{% block body %}
+    <h2 class="dashboard-title"> {{ wip.name }}</h2>
+    <div class="dashboard-card stack-large" >
+      <div class="meta__manage" >
+          {{ wip.author.userIdentifier }} -- {{ wip.createdAt | date }}
+      </div>
+        {{ wip.content }}
+
+        <form action="{{ path('manager_confirm', {id: wip.id}) }}" method="post">
+            <button class="btn-primary" type="submit">{{ icon('check') }} Approuvé</button>
+        </form>
+    </div>
+{% endblock %}
+

@@ -20,25 +20,21 @@
     <aside class="dashboard-sidebar">
         <div class="dashboard-sidebar__wrapper">
             <ul class="dashboard-sidebar__main">
-                <li><a href="{{ path('admin_app_dashboard') }}" {{ menu_active('home') }}>{{ icon('home') }} Communauty</a></li>
+                <li><a href="{{ path('manager_home') }}" {{ menu_active('home') }}>{{ icon('home') }} Communauty</a></li>
                 <li class="title">Communautée</li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a></li>
-                <li><a href="{{ path('admin_category_index') }}" {{ menu_active('category') }}>{{ icon('lines') }} Category</a></li>
+                <li><a href="#" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a></li>
+                <li><a href="#" {{ menu_active('category') }}>{{ icon('lines') }} Category</a></li>
                 <li class="title">Mods</li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('bl3og') }}>{{ icon('pen') }} Mods</a></li>
+                <li><a href="#" {{ menu_active('bl3og') }}>{{ icon('pen') }} Mods</a></li>
                 <li><a href="{{ path('manager_wip_require_index') }}" {{ menu_active('wip_action') }}>{{ icon('lines') }} WIP / Action</a></li>
-                <li><a href="{{ path('admin_category_index') }}" {{ menu_active('cawtegory') }}>{{ icon('lines') }} Marque</a></li>
+                <li><a href="#" {{ menu_active('cawtegory') }}>{{ icon('lines') }} Marque</a></li>
 
                 <li class="title">Forum</li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('bl3og') }}>{{ icon('pen') }} Forum</a></li>
+                <li><a href="#" {{ menu_active('bl3og') }}>{{ icon('pen') }} Forum</a></li>
 
                 <li class="title">Utilisateur & Team</li>
-                <li><a href="{{ path('admin_user_index') }}" {{ menu_active('users') }}>{{ icon('user') }} Utilisateur</a></li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('b3log') }}>{{ icon('pen') }} Team</a></li>
-
-                <li class="title">Configuration & Stats</li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('bl3og') }}>{{ icon('pen') }} Configuration</a></li>
-                <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blo3g') }}>{{ icon('pen') }} Stats</a></li>
+                <li><a href="#" {{ menu_active('users') }}>{{ icon('user') }} Utilisateur</a></li>
+                <li><a href="#" {{ menu_active('b3log') }}>{{ icon('pen') }} Team</a></li>
             </ul>
         </div>
     </aside>
