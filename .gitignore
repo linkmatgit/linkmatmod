@@ -18,3 +18,5 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /node_modules/
+/yarn-error.log
+/.idea/
