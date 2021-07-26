@@ -8,5 +8,9 @@
         {% if is_granted('ROLE_ADMIN') %}
             <a href="{{ path('admin_app_dashboard') }}">Administration</a>
         {% endif %}
+
+        {% if is_granted('ROLE_MANAGER') %}
+            <a href="{{ path('manager_home') }}">Communauty Manager</a>
+        {% endif %}
     {% endif %}
 {% endblock %}

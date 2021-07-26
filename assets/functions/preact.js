@@ -93,7 +93,7 @@ function disconnectedCallback () {
 /**
  * Pass an event listener to each `<slot>` that "forwards" the current
  * context value to the rendered child. The child will trigger a custom
- * event, where will add the context value to. Because events work
+ * event, where will add the context value to. Because events workaction
  * synchronously, the child can immediately pull of the value right
  * after having fired the event.
  */

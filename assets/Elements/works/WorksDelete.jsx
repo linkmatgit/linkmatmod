@@ -28,7 +28,7 @@ export function WorksDelete ({ message, topic, owner }) {
                 document.dispatchEvent(new Event(EVENT_MESSAGE_DELETE))
                 message.remove()
             } else {
-                await redirect('/work')
+                await redirect('/workaction')
                 flash('Votre sujet a bien été supprimé')
             }
         }

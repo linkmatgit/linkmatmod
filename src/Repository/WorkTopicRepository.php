@@ -38,9 +38,9 @@ class WorkTopicRepository extends AbstractRepository
         if ($tag) {
             $tags = [$tag];
             $query
-                ->join('t.work', 'work')
-                ->where('work IN (:work)')
-                ->setParameter('work', $tags);
+                ->join('t.workaction', 'workaction')
+                ->where('workaction IN (:workaction)')
+                ->setParameter('workaction', $tags);
         }
 
         return $query->getQuery();

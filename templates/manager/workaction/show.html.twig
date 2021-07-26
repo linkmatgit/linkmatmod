@@ -1,4 +1,4 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'manager/base.html.twig' %}
 
 {% block body %}
     <h2 class="dashboard-title"> {{ wip.name }}</h2>
@@ -9,7 +9,7 @@
         {{ wip.content }}
 
         <form action="{{ path('manager_confirm', {id: wip.id}) }}" method="post">
-            <button class="btn-primary" type="submit">Approuvé</button>
+            <button class="btn-primary" type="submit">{{ icon('check') }} Approuvé</button>
         </form>
     </div>
 {% endblock %}

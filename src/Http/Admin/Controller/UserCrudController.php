@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_ADMIN')]
 class UserCrudController extends CrudController
 {
+    protected string $searchField = 'username';
+
     protected string $templatePath = 'users';
     protected string $menuItem = 'users';
     protected string $entity = User::class;

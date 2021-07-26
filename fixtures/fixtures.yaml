@@ -39,7 +39,7 @@ App\Entity\Work\Work:
 
 App\Entity\Work\WorkTopic:
   w2orktopic{1..150} (extends w2orktopic):
-    tags: '@work*'
+    tags: '@workaction*'
 
 App\Entity\Work\WorkMessages:
   wipmessages{1..150} (extends wipmessages):

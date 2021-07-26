@@ -4,12 +4,8 @@
 namespace App\Http\Manager\Controller;
 
 
-use App\Entity\Application\Entity\Content;
 use App\Entity\Auth\User;
 use App\Entity\Work\Work;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,7 +14,7 @@ class WorkApprouveController extends ManagerCrudController
 {
 
     protected string $entity = Work::class;
-    protected string $templatePath = 'work';
+    protected string $templatePath = 'workaction';
     protected string $menuItem = 'wip_action';
     protected string $routePrefix = '';
     protected string $searchField = 'name';
@@ -69,4 +65,5 @@ class WorkApprouveController extends ManagerCrudController
         $this->addFlash('success', 'Le Wip a bien ete mit en ligne');
        return $this->redirectToRoute('manager_wip_require_index');
     }
+
 }

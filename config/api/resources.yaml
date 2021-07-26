@@ -23,7 +23,7 @@ App\Entity\Forum\Entity\ForumMessage:
         groups: ['read:message']
       security: is_granted("UPDATE_FORUM_MESSAGE", object)
 App\Entity\Work\WorkTopic:
-  shortName: 'work/topic'
+  shortName: 'workaction/topic'
   collectionOperations: []
   itemOperations:
     get:

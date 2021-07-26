@@ -49,7 +49,7 @@ class WorkRepository extends AbstractRepository
     }
     public function queryAllPublic():Query {
         return $this->createQueryBuilder('w')
-            ->orderBy('w.', 'DESC')
+            ->orderBy('w.createdAt', 'DESC')
             ->andWhere('w.approved = true')
             ->getQuery();
 

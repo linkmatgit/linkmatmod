@@ -29,7 +29,7 @@ class WorkController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(Request $request):Response {
         $title = 'Work In Progress';
-        $query = $this->r->queryAll();
+        $query = $this->r->queryAllPublic();
        return $this->renderingList($title, $query,$request);
     }
 
@@ -46,7 +46,8 @@ class WorkController extends AbstractController
         ]);
     }
 
-    private function renderingList(string $title, Query $query, Request $request, array $params = []) {
+    private function renderingList(string $title, Query $query, Request $request, array $params = []): Response
+    {
     $page = $request->query->getInt('page', 1);
     $wips = $this->paginator->paginate(
         $query,
@@ -60,7 +61,7 @@ class WorkController extends AbstractController
             throw new NotFoundHttpException('Aucun articles ne correspond à cette page');
         }
 
-        return $this->render('blog/index.html.twig', array_merge([
+        return $this->render('works/index.html.twig', array_merge([
             'wips' => $wips,
             'page' => $page,
             'title' => $title,

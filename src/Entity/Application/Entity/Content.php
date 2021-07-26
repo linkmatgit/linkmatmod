@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 #[ORM\DiscriminatorMap([
     'post' => Post::class,
     'mods'=> Mods::class,
-    'work' => Work::class
+    'workaction' => Work::class
 ])]
 #[ApiResource(
     collectionOperations: [],
