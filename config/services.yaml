@@ -14,6 +14,7 @@ services:
         bind:
             $projectDir: '%kernel.project_dir%'
             $adminPrefix: '%admin_prefix%'
+            $managerPrefix: '%manager_prefix%'
             $appEnv: '%kernel.environment%'
     Redis:
         class: Predis\Client

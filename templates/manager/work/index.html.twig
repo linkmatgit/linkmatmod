@@ -1,14 +1,18 @@
 {% extends 'manager/layout/card.html.twig' %}
 {% block title %}
     {{ icon('pen') }}
-    Gestion des articles
+    Gestion des Work in Progress
 {% endblock %}
 {% block actions %}
-    <a href="{{ path('admin_blog_new') }}" class="btn-primary">Ajouter un article</a>
+
 {% endblock %}
 {% block content %}
 
     <div class="blog__control" id="btntab1">
+        {% if rows | length < 1%}
+        <h2 >Beau Travail</h2>
+            <p>Il n'y a aucun travail a faire</p>
+  {% else %}
     <table class="table">
     <thead>
     <tr>
@@ -21,11 +25,11 @@
     </thead>
     <tbody>
 {% for row in rows %}
-    {% set link = path('admin_blog_edit', {id: row.id}) %}
+    {% set link = path('manager_wip_show_approuve', {id: row.id}) %}
     <tr>
             <th scope="row">{{ row.id }}</th>
-        <td><a href="{{ link }}">{{ row.title }}</a></td>
-             <td><span class="bullet {% if row.online == false %}bullet--danger{% endif %}"></span></td>
+        <td><a href="{{ link }}">{{ row.name }}</a></td>
+             <td></td>
                 <td>{{ row.createdAt | ago }}</td>
         <td>
             <div class="dashboard-actions">
@@ -46,6 +50,6 @@
     </table>
     {{ knp_pagination_render(rows) }}
     </div>
-
+        {% endif %}
 {% endblock %}
 

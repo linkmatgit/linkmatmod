@@ -11,6 +11,9 @@
         <a href="{{ path('app_wipOwn_index') }}" class="btn-primary-outlined">Voir mes WIP</a>
         </div>
     {% endif %}
+    {% if wips | length < 1%}
+    <h2 class="hero-title"></h2>
+    {% endif %}
     {% for wip in wips %}
 
             <article class="card">

@@ -85,7 +85,7 @@ class WorkProfileController extends AbstractController {
             return $this->redirectToRoute('app_wipOwn_index' ,[], 301);
         }
 
-        return $this->render("profil/works/edit.html.twig", [
+        return $this->render("profil/works/show.html.twig", [
             'form' => $form->createView()
         ]);
 

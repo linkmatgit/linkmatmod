@@ -1,16 +1,36 @@
-{% extends 'admin/base.html.twig' %}
+{% extends 'manager/base.html.twig' %}
 {% block title 'Communauty Manager' %}
 {% block body %}
-   <div class="dashboard-card">
-  <div class="grid">
+    <h3 class="page-title">Bienvenue {{ app.user.userIdentifier }} | <strong>Gestion</strong> de la commuautée</h3>
+
+    <div class="dashboard-card stack">
+        <div class="card stack p3 notice__manager">
+            <h4>A LIRE</h4>
+         <p>
+
+        Ce panneaux de gestion permet aux communautée manager de :
+
+          </p>
+            <ul>
+                <li>Gerez les Commentaires</li>
+                <li>Les Message sur le Forum</li>
+                <li>Gerez les Mods</li>
+                <li>Gerez les WIP</li>
+
+
+            </ul>
+
+            <p><strong>ATTENTION TOUTE LES CHOSE QUE VOUS FAITE SONT ENREGISTRER ET PEUVENT ETRE VUE PAR LES ADMINISTRATEUR</strong></p>
+
+            <p>Merci  de votre comprehension</p>
+            <p class="signature">Linkmat</p>
+        </div>
+       <div class="grid">
       <div class="card">
           <h3 class="section-title">Besoin d'actions</h3>
           {{ wip | length }}</div>
   </div>
 
-
-       {% for wips in wip %}
-       {% endfor %}
 
 
    </div>

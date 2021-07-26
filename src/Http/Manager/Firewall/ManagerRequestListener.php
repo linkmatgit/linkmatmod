@@ -5,6 +5,7 @@ namespace App\Http\Manager\Firewall;
 
 
 use App\Http\Admin\Controller\AdminAbstractController;
+use App\Http\Manager\Controller\ManagerAbstractController;
 use JetBrains\PhpStorm\ArrayShape;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ManagerRequestListener implements EventSubscriberInterface
 {
     private AuthorizationCheckerInterface $auth;
-    private string $adminPrefix;
+    private string $managerPrefix;
 
     public static function getSubscribedEvents()
     {
@@ -28,10 +29,10 @@ class ManagerRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function __construct(string $adminPrefix, AuthorizationCheckerInterface $auth)
+    public function __construct(string $managerPrefix, AuthorizationCheckerInterface $auth)
     {
         $this->auth = $auth;
-        $this->adminPrefix = $adminPrefix;
+        $this->managerPrefix = $managerPrefix;
     }
 
     public function onRequest(RequestEvent $event): void
@@ -40,7 +41,7 @@ class ManagerRequestListener implements EventSubscriberInterface
             return;
         }
         $uri = '/'.trim($event->getRequest()->getRequestUri(), '/').'/';
-        $prefix = '/'.trim($this->adminPrefix, '/').'/';
+        $prefix = '/'.trim($this->managerPrefix, '/').'/';
         if (substr($uri, 0, mb_strlen($prefix)) === $prefix &&
             !$this->auth->isGranted('ROLE_MANAGER')
         ) {
@@ -63,7 +64,7 @@ class ManagerRequestListener implements EventSubscriberInterface
             return;
         }
         $controller = $event->getController();
-        if (is_array($controller) && $controller[0] instanceof AdminAbstractController && !$this->auth->isGranted('ROLE_MANAGER')) {
+        if (is_array($controller) && $controller[0] instanceof ManagerAbstractController && !$this->auth->isGranted('ROLE_MANAGER')) {
             $exception = new AccessDeniedException();
             $exception->setSubject($event->getRequest());
             throw $exception;

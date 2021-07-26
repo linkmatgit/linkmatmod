@@ -36,3 +36,14 @@ $font-alt: 'open-sans', sans-serif;
   }
 
 }
+
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: $font-alt;
+  line-height: 1.2;
+
+  strong {
+    color: var(--contrast);
+  }
+}
