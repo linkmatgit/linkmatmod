@@ -3,7 +3,7 @@
 
     </a>
     <div class="blog-post__body">
-        <h2 class="blog-post__title"><a href="{{ path('blog_show', {id: post.id, slug: post.slug}) }}">{{ post.title }}</a></h2>
+        <h2 class="blog-post__title"><a href="{{ path('app_blog_show', {id: post.id, slug: post.slug}) }}">{{ post.title }}</a></h2>
         <div class="blog-post__meta">
             <div>{{ post.createdAt | format_date('long') }}</div>
             <div>Auteur {{ post.author.username }}</div>

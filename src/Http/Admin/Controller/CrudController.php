@@ -100,7 +100,7 @@ class CrudController extends AdminAbstractController
             return $this->redirectToRoute($this->routePrefix.'_edit', ['id' => $entity->getId()]);
         }
 
-        return $this->render("admin/{$this->templatePath}/show.html.twig", [
+        return $this->render("admin/{$this->templatePath}/edit.html.twig", [
             'form' => $form->createView(),
             'entity' => $data->getEntity(),
             'menu' => $this->menuItem,

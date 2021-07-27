@@ -47,3 +47,19 @@ $font-alt: 'open-sans', sans-serif;
     color: var(--contrast);
   }
 }
+%hero-text,
+.hero-text {
+  font-size: 16px;
+
+  strong {
+    font-weight: bold;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  @include up(600) {
+    font-size: 22px;
+  }
+}

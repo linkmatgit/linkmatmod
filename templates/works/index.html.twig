@@ -1,36 +1,35 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+<section class="container stack-large mt2">
 
     {% if app.user %}
         <div class="action__work__header">
-
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="#" class="pill-red"> {{ wips | length }} </a>
-        {% endif %}
         <a href="{{ path('app_wipOwn_index') }}" class="btn-primary-outlined">Voir mes WIP</a>
         </div>
     {% endif %}
-    {% if wips | length < 1%}
-    <h2 class="hero-title"></h2>
-    {% endif %}
-    {% for wip in wips %}
+</section>
+    <section class="container stack-large grid3 mt3">
+        <div class="wip__hero stack">
+            <h1 class="hero-title">Tous les <strong>projets</strong></h1>
+            <p>Voici une liste des tous les projet qui on ete proposer par les differente equipe</p>
+        </div>
 
-            <article class="card">
+    {% for work in wips %}
+        <article class="card">
+            <a href="{{ path('app_wip_show', {id: work.id})}}">
                 <div class="card__body stack">
-                    <h2 class="card__title">{{ wip.name }}</h2>
-                    <div class="meta__works">{{ wip.author.userIdentifier }} -- {{ wip.updatedat | ago }}</div>
-                    <div class="card__description text-small">
-                        {{ wip.content | striptags | excerpt(130) | raw }}
-                    </div>
+                <h2 class="card__title">{{ work.name }}</h2>
+                <div class="card__description text-small">
+                    {{ work.content | striptags | excerpt(130) | raw }}
                 </div>
-                <a href="{{ path('app_wip_show', { id: wip.id}) }}">Voir</a>
-                {% if app.user ==  wip.author%}
-
-                {% endif %}
-            </article>
-
+            </div>
+            </a>
+        </article>
         {% endfor %}
+
+
+    </section>
+    {{ knp_pagination_render(wips) }}
 {% endblock %}
 
 

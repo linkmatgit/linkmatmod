@@ -40,8 +40,13 @@ App\Entity\Mods\Entity\ModsBrand:
 
 App\Entity\Mods\Entity\ModsCategory:
   modcategory (template):
-    name: <sentence(5, true)>
+    name: Category <current()>
+    slug: category-<current()>
+    position: <current()>
     description: <sentence(2, true)>
+    createdAt: <dateTimeThisYear()>
+    updated_at: <dateTimeThisYear()>
+    author: '@user*'
 
 App\Entity\Mods\Entity\Mods:
   mods (template):
@@ -51,7 +56,7 @@ App\Entity\Mods\Entity\Mods:
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
     online: true
-    author: '@user1'
+    author: '@user*'
     price: 500<current()>
     releaseDate: <dateTimeThisYear()>
     size: 2.3
@@ -60,42 +65,43 @@ App\Entity\Mods\Entity\Mods:
 
 App\Entity\Forum\Entity\ForumTag:
   tag (template):
-    title: <sentence(1, true)>
+    title: Tag <current()>
     slug: <slug()>
     description: <sentence(2, true)>
     online: true
-    creator: '@user1'
+    creator: '@user*'
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    position: 1
+    position: <current()>
 
 App\Entity\Forum\Entity\ForumTopic:
   topic (template):
-    name: <sentence(5, true)>
+    name: Topic <current()>
     content: <sentence(2, true)>
-    author: '@user1'
+    author: '@user*'
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
+    tags: [ '@tag*' ]
 
 App\Entity\Work\Work:
   work (template):
-    name: <sentence(5, true)>
+    name: Tag <current()>
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    author: '@user1'
+    author: '@user*'
 
 App\Entity\Work\WorkTopic:
   w2orktopic (template):
-    name: <sentence(5, true)>
+    name: Topic <current()>
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    author: '@user1'
+    author: '@user*'
 
 App\Entity\Work\WorkMessages:
   wipmessages (template):
     content: <text(1500)>
     created_at: <dateTimeThisYear()>
     updated_at: <dateTimeThisYear()>
-    author: '@user1'
+    author: '@user*'

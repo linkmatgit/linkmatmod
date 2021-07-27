@@ -3,6 +3,8 @@
 namespace App\Http\Form;
 
 
+use App\Entity\Mods\Entity\ModsCategory;
+use App\Http\Admin\Type\ModCategoryChoice;
 use App\Http\Admin\Type\UserChoiceType;
 use App\Http\Type\CategoryType;
 use App\Http\Type\DateTimeType;
@@ -32,6 +34,7 @@ class AutomaticForm extends AbstractType
         UploadedFile::class => FileType::class,
         DateTimeInterface::class => DateTimeType::class,
         'bool' => SwitchType::class,
+        ModsCategory::class => ModCategoryChoice::class
     ];
 
     const NAMES = [

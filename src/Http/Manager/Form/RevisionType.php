@@ -13,21 +13,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DeclineWipType extends AbstractType
+class RevisionType extends AbstractType
 {
 
 
-    public function __construct(private ForumTagRepository $tagRepository)
-    {
-
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $tags = $this->tagRepository->findAllOrdered();
-        $builder
-
-            ->add('reason', TypeTextArea::class)
+        $builder->add('reason', TypeTextArea::class)
             ->add('reasonType', ChoiceType::class,[
                 'required' => true,
                 'choices' => array_flip(Work::$reasonTypes),

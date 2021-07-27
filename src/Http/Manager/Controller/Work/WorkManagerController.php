@@ -18,7 +18,7 @@ class WorkManagerController extends ManagerCrudController
 {
 
     protected string $entity = Work::class;
-    protected string $templatePath = 'works';
+    protected string $templatePath = 'wip/works';
     protected string $menuItem = 'wip_manager';
     protected string $routePrefix = '';
     protected string $searchField = 'name';

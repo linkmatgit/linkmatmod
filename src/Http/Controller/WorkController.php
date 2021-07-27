@@ -12,6 +12,7 @@ use App\Repository\WorkTopicRepository;
 use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,7 +22,7 @@ class WorkController extends AbstractController
 {
     public function __construct(
         private WorkRepository $r,
-        private PaginatorInterface $paginator
+        private PaginatorInterface $paginator,
     )
     {
     }
@@ -30,7 +31,7 @@ class WorkController extends AbstractController
     public function index(Request $request):Response {
         $title = 'Work In Progress';
         $query = $this->r->queryAllPublic();
-       return $this->renderingList($title, $query,$request);
+        return $this->renderingList($title, $query ,$request);
     }
 
     #[Route('/{id<\d+>}', name: 'show')]

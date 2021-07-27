@@ -14,7 +14,7 @@
 @media only screen and (min-width: 1370px) {
   :root {
     --container-padding: 20px;
-    --container-width: 1330px;
+    --container-width: 1230px;
   }
 }
 .page-wrapper {
@@ -100,13 +100,37 @@
 
 // Grille
 // ==================
+%grid,
 .grid {
   width: 100%;
   display: grid !important;
   grid-gap: space(2);
   grid-template-columns: repeat(auto-fill, minmax(var(--col, 275px), 1fr));
 }
+%grid2,
+.grid2 {
+  width: 100%;
+  display: grid !important;
+  --gap: 2;
+  grid-gap: calc(var(--gap) * var(--space));
+  grid-template-columns: 1fr;
 
+  @include up(730) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+%grid3,
+.grid3 {
+  width: 100%;
+  display: grid !important;
+  --gap: 2;
+  grid-gap: calc(var(--gap) * var(--space));
+  grid-template-columns: 1fr;
+
+  @include up(730) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 .hstack {
   display: flex;
   flex-wrap: wrap;

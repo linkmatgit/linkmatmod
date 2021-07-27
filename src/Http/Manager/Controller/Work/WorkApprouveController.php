@@ -18,7 +18,7 @@ class WorkApprouveController extends ManagerCrudController
 {
 
     protected string $entity = Work::class;
-    protected string $templatePath = 'workaction';
+    protected string $templatePath = 'wip/workaction';
     protected string $menuItem = 'wip_action';
     protected string $routePrefix = '';
     protected string $searchField = 'name';
@@ -86,7 +86,7 @@ class WorkApprouveController extends ManagerCrudController
             $this->addFlash("Success", 'Le WIP a bien ete Refusée');
             return $this->redirectToRoute('manager_wipaction_require_index');
         }
-        return $this->render('manager/works/decline/decline.html.twig', [
+        return $this->renderManager('decline/decline.html.twig', [
             'work' => $work,
             'form'     => $form->createView()
         ]);

@@ -4,24 +4,24 @@ namespace App\Http\Admin\Data;
 
 
 use App\Entity\Auth\User;
-use App\Entity\Blog\Category;
-
+use App\Entity\Mods\Entity\ModsCategory;
 use App\Http\Form\AutomaticForm;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
-class CategoryCrudData implements CrudDataInterface
+class ModCategoryCrudData implements CrudDataInterface
 {
     #[Assert\NotBlank]
     public ?string $name = null;
 
     private EntityManagerInterface $em;
 
+
     public ?string $slug = null;
 
+    public ?ModsCategory $parent;
 
-    public ?string $color = null;
+    public bool $online;
 
     public ?\DateTimeInterface $createdAt;
 
@@ -31,30 +31,31 @@ class CategoryCrudData implements CrudDataInterface
     #[Assert\NotBlank]
     public ?string $description = null;
 
-    private Category $entity ;
+    private ModsCategory $entity ;
 
-    public function  __construct(Category $category)
+    public function  __construct(ModsCategory $category)
     {
         $this->entity = $category;
         $this->name = $category->getName();
-        $this->slug = $category->getSlug();
         $this->createdAt = $category->getCreatedAt();
         $this->description = $category->getDescription();
         $this->author = $category->getAuthor();
-        $this->color = $category->getColor();
-
-
+        $this->parent = $category->getParent();
+        $this->online = $category->isOnline();
+        $this->slug = $category->getSlug();
     }
     public function hydrate(): void
     {
 
-            $this->entity->setName($this->name);
-            $this->entity->setCreatedAt($this->createdAt);
-            $this->entity->setDescription($this->description);
-            $this->entity->setUpdatedAt(new \DateTime());
-            $this->entity->setAuthor($this->author);
-            $this->entity->setSlug($this->slug);
-            $this->entity->setColor($this->color);
+        $this->entity->setName($this->name);
+        $this->entity->setCreatedAt($this->createdAt);
+        $this->entity->setDescription($this->description);
+        $this->entity->setUpdatedAt(new \DateTime());
+        $this->entity->setAuthor($this->author);
+        $this->entity->setParent($this->parent);
+        $this->entity->setOnline($this->online);
+        $this->entity->setSlug($this->slug);
+
     }
 
     public function setEntityManager(EntityManagerInterface $em): self
@@ -70,7 +71,7 @@ class CategoryCrudData implements CrudDataInterface
 
     public function getFormClass(): string
     {
-       return AutomaticForm::class;
+        return AutomaticForm::class;
     }
 
     public function getAuthor(): ?User
@@ -80,6 +81,6 @@ class CategoryCrudData implements CrudDataInterface
 
     public function setAuthor(User $author): ?User
     {
-       return $this->author = $author;
+        return $this->author = $author;
     }
 }

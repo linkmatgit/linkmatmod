@@ -52,6 +52,7 @@ class WorkRepository extends AbstractRepository
             ->where('w.author = :user')
             ->orderBy('w.id', 'DESC')
             ->andWhere('w.approved = 1')
+
             ->setMaxResults(4)
             ->setParameter('user', $user)
             ->getQuery();
@@ -59,8 +60,9 @@ class WorkRepository extends AbstractRepository
     }
     public function queryAllPublic():Query {
         return $this->createQueryBuilder('w')
+            ->select('w')
             ->orderBy('w.createdAt', 'DESC')
-            ->andWhere('w.approved = 1')
+            ->andWhere('w.approved = 1 AND w.statut = 0')
             ->getQuery();
 
     }

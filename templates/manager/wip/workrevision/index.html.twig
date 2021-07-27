@@ -25,7 +25,7 @@
     </thead>
     <tbody>
 {% for row in rows %}
-    {% set link = path('admin_blog_edit', {id: row.id}) %}
+    {% set link = path('manager_wipaction_show', {id: row.id}) %}
     <tr>
             <th scope="row">{{ row.id }}</th>
         <td><a href="{{ link }}">{{ row.name }}</a></td>
@@ -33,13 +33,7 @@
                 <td>{{ row.createdAt | ago }}</td>
         <td>
             <div class="dashboard-actions">
-                <a href="{{ link }}">{{ icon('edit') }}</a>
-                <form action="{{ path('admin_blog_edit', {id: row.id}) }}" method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce contenu')">
-                    <input type="hidden" name="_method" value="DELETE" />
-                    <button type="submit">
-                        {{ icon('delete') }}
-                    </button>
-                </form>
+                <a href="{{ link }}">{{ icon('check') }}</a>
             </div>
         </td>
         </tr>

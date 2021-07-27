@@ -1,0 +1,25 @@
+<div class="card " style="padding: 15px">
+ {{ form_start(form, {attr: {class: 'stack' }}) }}
+    <section>
+    <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
+
+    <div class="grid">
+
+        {{ form_row(form.reason) }}
+        {{ form_row(form.reasonType) }}
+
+    </div>
+    </section>
+     <section class="stack-large">
+         <div class="full">
+
+         </div>
+         <div class="full">
+             <button type="submit" class="btn-danger">{{ icon('delete') }}Refuser</button>
+         </div>
+     </section>
+
+ {{ form_end(form) }}
+
+
+</div>

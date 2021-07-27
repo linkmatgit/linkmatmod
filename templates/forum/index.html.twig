@@ -13,7 +13,7 @@
             {% if tags | length > 0 %}
                 <div class="forum-page__sidebar stack">
                     {% if app.user %}
-                        <a href="{{ path('forum_new') }}" class="btn-primary forum-page__sidebar-btn">
+                        <a href="{{ path('app_forum_new') }}" class="btn-primary forum-page__sidebar-btn">
                             Nouveau sujet
                             {{ icon('plus') }}
                         </a>

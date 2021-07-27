@@ -19,11 +19,15 @@
                 {{ wip.reason }}
             {% endif %}
         </div>
-        <form action="{{ path('manager_wipaction_confirm', {id: wip.id}) }}" method="post">
-            <button class="btn-primary" {% if wip.approved == true %} disabled {% endif %} type="submit">{{ icon('check') }} Approuvé</button>
-        </form>
-        <a href="{{ path('manager_wipaction_decline', {id: wip.id}) }}" class="btn-primary">{{ icon('delete') }} ffes</a>
+     <div class="grid">
+         <form action="{{ path('manager_wipaction_confirm', {id: wip.id}) }}" method="post">
+             <button class="btn-primary  btn-block" {% if wip.approved == true %} disabled {% endif %} type="submit">{{ icon('check') }} Approuvé</button>
+         </form>
 
+         <a href="{{ path('manager_wipaction_decline', {id: wip.id}) }}" class="btn-danger">{{ icon('delete') }}Refusé</a>
+         <a href="{{ path('manager_work_revision_decline', {id: wip.id}) }}" class="btn-primary-outlined">{{ icon('delete') }}Revision</a>
+
+     </div>
     </div>
 {% endblock %}
 

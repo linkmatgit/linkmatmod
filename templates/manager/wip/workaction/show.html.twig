@@ -1,0 +1,22 @@
+{% extends 'manager/base.html.twig' %}
+
+{% block body %}
+    <h2 class="dashboard-title"> {{ wip.name }}</h2>
+    <div class="dashboard-card stack-large" >
+      <div class="meta__manage" >
+          {{ wip.author.userIdentifier }} -- {{ wip.createdAt | date }}
+      </div>
+        {{ wip.content }}
+
+        <div class="grid">
+            <form action="{{ path('manager_wipaction_confirm', {id: wip.id}) }}" method="post">
+                <button class="btn-primary  btn-block" {% if wip.approved == true %} disabled {% endif %} type="submit">{{ icon('check') }} Approuvé</button>
+            </form>
+
+            <a href="{{ path('manager_wipaction_decline', {id: wip.id}) }}" class="btn-danger">{{ icon('delete') }}Refusé</a>
+            <a href="{{ path('manager_work_revision_decline', {id: wip.id}) }}" class="btn-primary-outlined">{{ icon('delete') }}Revision</a>
+
+        </div>
+    </div>
+{% endblock %}
+

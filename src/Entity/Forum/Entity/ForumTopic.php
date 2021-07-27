@@ -195,23 +195,30 @@ class ForumTopic {
     }
 
     /**
-     * @return ArrayCollection|Collection
+     * @return Collection|ForumTag[]
      */
-    public function getTags(): ArrayCollection|Collection
+    public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    /**
-     * @param ArrayCollection|Collection $tags
-     * @return ForumTopic
-     */
-    public function setTags(ArrayCollection|Collection $tags): ForumTopic
+    public function addTag(ForumTag $tag): self
     {
-        $this->tags = $tags;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+        }
+
         return $this;
     }
 
+    public function removeTag(ForumTag $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
+
+        return $this;
+    }
     /**
      * @return User
      */

@@ -24,9 +24,12 @@
                 <li class="title">Communautée</li>
                 <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('blog') }}>{{ icon('pen') }} Blog</a></li>
                 <li><a href="{{ path('admin_category_index') }}" {{ menu_active('category') }}>{{ icon('lines') }} Category</a></li>
+                {% if is_granted('ROLE_MANAGER') %}
+                    <li><a href="{{ path('manager_home') }}">{{ icon('lines') }} Communauty Manager</a></li>
+                {% endif %}
                 <li class="title">Mods</li>
                 <li><a href="{{ path('admin_blog_index') }}" {{ menu_active('bl3og') }}>{{ icon('pen') }} Mods</a></li>
-                <li><a href="{{ path('admin_category_index') }}" {{ menu_active('cawtegory') }}>{{ icon('lines') }} Category</a></li>
+                <li><a href="{{ path('admin_modcategory_index') }}" {{ menu_active('mods_category') }}>{{ icon('lines') }} Category</a></li>
                 <li><a href="{{ path('admin_category_index') }}" {{ menu_active('cawtegory') }}>{{ icon('lines') }} Marque</a></li>
 
                 <li class="title">Forum</li>
