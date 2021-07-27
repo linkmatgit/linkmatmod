@@ -13,11 +13,12 @@
         {% if is_granted('ROLE_ADMIN') %}
             {{ form_row(form.statut) }}
             {{ form_row(form.approved) }}
+            <div class="form-group">
+                <label for="user">Nom de l'auteur</label>
+                <input type="text" class="form-control" id="user" disabled value="{{ app.user.userIdentifier }}" />
+            </div>
         {% endif %}
-        <div class="form-group">
-        <label for="user">Nom de l'auteur</label>
-       <input type="text" class="form-control" id="user" disabled value="{{ app.user.userIdentifier }}" />
-        </div>
+
 
     </div>
 

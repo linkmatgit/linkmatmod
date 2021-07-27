@@ -12,11 +12,14 @@ const FERMER = 2;
 const PENDING = 0;
 const APPROUVER = 1;
 const DECLINE = 2;
+const REVISION = 3;
+
 
 
 const NONRESPECT =  0;
 const COPIEDEMODE = 1;
 const PASVOTRETRAVAIL = 2;
+const MANQUEDINFO = 3;
 
 
 trait TypeChoice
@@ -36,14 +39,16 @@ trait TypeChoice
     public static array $confirm = [
         PENDING => 'EN ATTENTE',
         APPROUVER =>'APPROUVER',
-        DECLINE => 'REFUSER'
+        DECLINE => 'REFUSER',
+        REVISION => 'REVISION'
     ];
 
 
     public static array $reasonTypes = [
         NONRESPECT => 'Le Mod ne correspond pas au attente de qualité definie par les CGU',
         COPIEDEMODE =>'Votre Mod a ete Copie d\'un autre mod ',
-        PASVOTRETRAVAIL => 'Ce Mod ne vous appartien pas'
+        PASVOTRETRAVAIL => 'Ce Mod ne vous appartien pas',
+        MANQUEDINFO => 'Pas assez de details'
     ];
 
     public static array $status = [
@@ -51,25 +56,26 @@ trait TypeChoice
         FERMER => 'Fermé',
     ];
 
-    public function getApprouveName() {
-        return self::$confirm[$this->approved];
-    }
     /**
-     * @return bool
+     * @return int
      */
-    public function isApproved(): bool
+    public function getApproved(): int
     {
         return $this->approved;
     }
 
     /**
-     * @param bool $approved
-     * @return Work
+     * @param int $approved
+     * @return TypeChoice|\App\Entity\Teams\Teams|Work|WorkTopic
      */
-    public function setApproved(bool $approved): Work
+    public function setApproved(int $approved): self
     {
         $this->approved = $approved;
         return $this;
+    }
+
+    public function getApprouveName() {
+        return self::$confirm[$this->approved];
     }
 
     public function getStatut(): int

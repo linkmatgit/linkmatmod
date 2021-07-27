@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation\UploadableField;
 /**
  * $2y$13$Ka0xj4/BgKrDxhGsulaRiOjINFF7RCuqgq2Fkf/Uh3Wj2K2cfA4V.
  */
-#[Uploadable]
+
 #[UniqueEntity(fields: "username", message: 'Un autre persone utilise deja ce pseudonyme')]
 #[UniqueEntity(fields: "email", message: 'Un autre persone utilise deja cette Email')]
 #[Entity(repositoryClass: UserRepository::class)]

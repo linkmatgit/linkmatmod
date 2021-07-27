@@ -36,6 +36,7 @@ class WorkProfileController extends AbstractController {
         return $this->render('profil/works/index.html.twig', [
             'works' => $this->repository->queryWorkByUserApprouve($user)->getResult(),
             'privates' => $this->repository->queryWorkByUserNotApprouve($user)->getResult(),
+            'declines' => $this->repository->queryWorkByUserDecline($user)->getResult(),
             'count' => $this->repository->queryCheckIsNotEmpty($user)->getResult()
         ]);
     }
@@ -85,7 +86,28 @@ class WorkProfileController extends AbstractController {
             return $this->redirectToRoute('app_wipOwn_index' ,[], 301);
         }
 
-        return $this->render("profil/works/show.html.twig", [
+        return $this->render("profil/works/edit.html.twig", [
+            'form' => $form->createView()
+        ]);
+
+    }
+    #[Route('/revision/{id<\d+>}', name: 'revision')]
+    public function revision(Request $request, Work $data): Response{
+        $this->denyAccessUnlessGranted('ROLE_USER');
+        $request =  $this->requestStack->getCurrentRequest();
+        $form = $this->createForm(WorkType::class, $data);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data->setUpdatedAt(new \DateTime());
+            $this->em->persist($data);
+            $this->em->flush();
+            $this->addFlash('success', 'Le contenu a bien été modifié');
+            return $this->redirectToRoute('app_wipOwn_index' ,[], 301);
+        }
+
+        return $this->render("profil/works/edit.html.twig", [
+            'wip' => $data,
             'form' => $form->createView()
         ]);
 

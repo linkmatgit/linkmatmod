@@ -36,6 +36,16 @@ class WorkRepository extends AbstractRepository
             ->setParameter('user', $user)
             ->getQuery();
     }
+    public function queryWorkByUserDecline(User $user): Query {
+
+        return $this->createQueryBuilder('w')
+            ->where('w.author = :user')
+            ->orderBy('w.id', 'DESC')
+            ->andWhere('w.approved = 2')
+            ->setMaxResults(4)
+            ->setParameter('user', $user)
+            ->getQuery();
+    }
     public function queryWorkByUserApprouve(User $user): Query {
 
         return $this->createQueryBuilder('w')

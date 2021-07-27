@@ -3,10 +3,12 @@
   grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
   grid-gap: space(4);
   grid-auto-flow: dense;
+  position: relative;
 }
 
 .wip .card {
   width: 100%;
+  position: relative;
 }
 
 .action__work__header {
@@ -17,4 +19,17 @@
 
 .wip__grid {
 
+}
+.decline__mod {
+  border: solid 4px var(--red);
+}
+.pill__decline {
+  position: absolute;
+  top: 8px;
+  right: var(--space);
+  background: red;
+  border-radius: 6px;
+  padding: 0 8px;
+  color: #000;
+  font-weight: 700;
 }
