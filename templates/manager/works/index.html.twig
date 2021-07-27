@@ -25,7 +25,7 @@
     </thead>
     <tbody>
 {% for row in rows %}
-    {% set link = path('manager_wip_show_approuve', {id: row.id}) %}
+    {% set link = path('admin_blog_edit', {id: row.id}) %}
     <tr>
             <th scope="row">{{ row.id }}</th>
         <td><a href="{{ link }}">{{ row.name }}</a></td>

@@ -76,6 +76,36 @@
 
 </section>
     {% endif %}
+
+
+
+    {% if declines | length > 0 %}
+        <h2 class="hero-title container">Vos <strong>"WIP"</strong> Refusée</h2>
+        <section class="container stack-large wip mt3">
+            {% for decline in declines %}
+                <article class="card wip__card {% if decline.approved == 2 %} decline__mod {% endif %}">
+                    {% if decline.approved == 2 %} <div class="pill__decline">REFUSER</div>{% endif %}
+
+                    <div class="card__body stack">
+                        <h2 class="card__title">{{ decline.name }}</h2>
+                        <div class="card__description text-small">
+                            {{ decline.content | striptags | excerpt(130) | raw }}
+                        </div>
+                    </div>
+                    {% if app.user ==  decline.author %}
+                        {% if decline.approved == 2%}
+                            <a href="{{ path('app_wipOwn_revision', {id: decline.id} ) }}">Revision</a>
+                        {% elseif decline.statut  == 1 %}
+                            <a href="{{ path("app_wipOwn_edit", {id: decline.id}) }}">Editée</a>
+                            <work-delete topic="{{ decline.id }}" owner="{{ decline.author.id }}"></work-delete>
+                        {% endif %}
+                    {% endif %}
+                </article>
+
+            {% endfor %}
+
+        </section>
+    {% endif %}
 {% endblock %}
 
 

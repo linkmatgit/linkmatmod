@@ -5,23 +5,17 @@
 
     <div class="grid">
 
-        {{ form_row(form.title) }}
-        {{ form_row(form.slug) }}
-        {{ form_row(form.category) }}
-        {{ form_row(form.author) }}
-        {{ form_row(form.createdAt) }}
-        {{ form_row(form.online) }}
-
+        {{ form_row(form.reason) }}
+        {{ form_row(form.reasonType) }}
 
     </div>
-
     </section>
      <section class="stack-large">
          <div class="full">
-             {{ form_row(form.content) }}
+
          </div>
          <div class="full">
-             <button type="submit" class="btn-gradient">Sauvegarder</button>
+             <button type="submit" class="btn-danger">{{ icon('delete') }}Refuser</button>
          </div>
      </section>
 

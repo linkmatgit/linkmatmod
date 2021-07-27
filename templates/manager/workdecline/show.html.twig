@@ -8,6 +8,17 @@
       </div>
         {{ wip.content }}
 
+        <div class="meta__refuse">
+
+            {% if wip.approved == 2 %}
+               Refusée --
+               Par {{ wip.approuveBy.userIdentifier }} -- Le
+                {{ wip.approuvedAt | format_datetime() }}
+             {% endif %}
+            {% if wip.reason %}
+                {{ wip.reason }}
+            {% endif %}
+        </div>
         <form action="{{ path('manager_wipaction_confirm', {id: wip.id}) }}" method="post">
             <button class="btn-primary" {% if wip.approved == true %} disabled {% endif %} type="submit">{{ icon('check') }} Approuvé</button>
         </form>

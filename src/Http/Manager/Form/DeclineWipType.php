@@ -28,8 +28,9 @@ class DeclineWipType extends AbstractType
             ->add('reason', EditorType::class)
             ->add('reasonType', ChoiceType::class,[
                 'required' => true,
-                'choices' => array_flip(Work::$confirm),
+                'choices' => array_flip(Work::$reasonTypes),
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
