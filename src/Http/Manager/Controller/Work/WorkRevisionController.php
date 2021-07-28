@@ -57,7 +57,7 @@ class WorkRevisionController extends ManagerCrudController
         ]);
 
     }
-    #[Route("/{id<\d+>}", name: '_decline')]
+    #[Route("/{id<\d+>}", name: '_accept')]
     public function setDecline(Work $work, Request $request): Response {
 
         $form = $this->createForm(RevisionType::class, $work);
@@ -66,7 +66,7 @@ class WorkRevisionController extends ManagerCrudController
         $user = $this->getUser();
         $work->setApprouveBy($user);
         $work->setApprouvedAt(new \DateTime());
-        $work->setApproved(2);
+        $work->setApproved(1);
         if($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($work);
             $this->em->flush();

@@ -1,6 +1,27 @@
 {% extends 'manager/base.html.twig' %}
 
 {% block body %}
-    {% include 'manager/wip/workrevision/_form.html.twig' %}
+    <div class="card " style="padding: 15px">
+        {{ form_start(form, {attr: {class: 'stack' }}) }}
+        <section>
+            <div class="full"><h3 class="section-title">Information Pricipale</h3></div>
+
+            <div class="grid">
+                {{ form_row(form.statut) }}
+            </div>
+        </section>
+        <section class="stack-large">
+            <div class="full">
+
+            </div>
+            <div class="full">
+                <button type="submit" class="btn-danger">{{ icon('delete') }}Refuser</button>
+            </div>
+        </section>
+
+        {{ form_end(form) }}
+
+
+    </div>
 {% endblock %}
 

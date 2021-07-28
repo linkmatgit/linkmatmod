@@ -20,11 +20,10 @@ class RevisionType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('reason', TypeTextArea::class)
-            ->add('reasonType', ChoiceType::class,[
-                'required' => true,
-                'choices' => array_flip(Work::$reasonTypes),
-            ]);
+        $builder->add('statut', ChoiceType::class,[
+            'required' => true,
+            'choices' => array_flip(Work::$status),
+        ]);
 
     }
 

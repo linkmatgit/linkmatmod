@@ -1,5 +1,7 @@
 import '/css/app.scss'
 
+import Turbolinks from 'turbolinks'
+
 import {InputChoices, SelectChoices} from "/Elements/Choices";
 import {Switch} from "/Elements/Switch";
 import {TimeAgo} from "/Elements/TimeAgo";
@@ -15,7 +17,7 @@ import SpinningDots from '@grafikart/spinning-dots-element'
 import preactCustomElement from '/functions/preact.js'
 import {Comments} from "/Components/Comments";
 import '/Elements/works/index'
-import Turbolinks from 'turbolinks'
+
 
 customElements.define('alert-message', Alert)
 customElements.define('alert-floating', FloatingAlert)
@@ -32,4 +34,7 @@ customElements.define('ajax-delete', AjaxDelete)
 customElements.define('loader-overlay', LoaderOverlay)
 customElements.define('spinning-dots', SpinningDots)
 preactCustomElement('comments-area', Comments, ['target'])
+
+
+
 Turbolinks.start()

@@ -94,7 +94,7 @@
                     </div>
                     {% if app.user ==  decline.author %}
                         {% if decline.approved == 2%}
-                            <a href="{{ path('app_wipOwn_revision', {id: decline.id} ) }}">Revision</a>
+                            <a href="{{ path('app_revision', {id: decline.id}) }}">Proposer une correction</a>
                         {% elseif decline.statut  == 1 %}
                             <a href="{{ path("app_wipOwn_edit", {id: decline.id}) }}">Editée</a>
                             <work-delete topic="{{ decline.id }}" owner="{{ decline.author.id }}"></work-delete>

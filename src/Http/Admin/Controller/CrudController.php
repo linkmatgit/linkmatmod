@@ -95,6 +95,7 @@ class CrudController extends AdminAbstractController
             if ($this->events['update'] ?? null) {
                 $this->dispatcher->dispatch(new $this->events['update']($entity, $old));
             }
+
             $this->addFlash('success', 'Le contenu a bien été modifié');
 
             return $this->redirectToRoute($this->routePrefix.'_edit', ['id' => $entity->getId()]);
